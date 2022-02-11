@@ -26,7 +26,7 @@ const ReplyWrite = (props) => {
                 </HarfDiv>
 
 
-                <HarfDiv>                
+                <HarfDiv style={{verticalAlign:"top"}}>
                     <Text size="25px">답장💌</Text>
                     <Grid>
                         <Input 

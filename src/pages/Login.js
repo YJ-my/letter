@@ -1,34 +1,31 @@
 import React from "react";
 import { Text, Input, Grid, Button } from "../elements";
+import { useDispatch } from "react-redux";
 import { emailCheck } from "../shared/common";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const Login = (props) => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
   
     const [id, setId] = React.useState("");
     const [pwd, setPwd] = React.useState("");
     // const [loginCheck, setLogin] = React.useState(true);
   
-    // const login = () => {
+    const login = () => {
+      if(id === "" || pwd === ""){
+        window.alert("아이디 혹은 비밀번호가 공란입니다! 입력해주세요!");
+        return;  
+      } else {
+        // setLogin(false);
+      }
   
-    //   console.log(id);
+      if(!emailCheck(id)){
+        window.alert("이메일 형식이 맞지 않습니다!");
+        return;
+      }
   
-    //   if(id === "" || pwd === ""){
-    //     // setLogin(true);
-    //     window.alert("아이디 혹은 비밀번호가 공란입니다! 입력해주세요!");
-    //     return;
-  
-    //   } else {
-    //     // setLogin(false);
-    //   }
-  
-    //   if(!emailCheck(id)){
-    //     window.alert("이메일 형식이 맞지 않습니다!");
-    //     return;
-    //   }
-  
-    //   dispatch(userActions.loginFB(id, pwd));
-    // };
+      dispatch(userActions.loginAction(id, pwd));
+    };
   
     return (
       <React.Fragment>
@@ -55,9 +52,6 @@ const Login = (props) => {
               _onChange={(e) => {
                 setPwd(e.target.value);
               }}
-              value={pwd}
-            //   is_submit
-            //   onSubmit={login}
             />
           </Grid>
   
@@ -65,7 +59,7 @@ const Login = (props) => {
             text="로그인하기"
             _onClick={() => {
               console.log("로그인 했어!");
-            //   login();
+              login();
             }}
             disabled={id === "" || pwd === "" ? true : false}
           ></Button>

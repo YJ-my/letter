@@ -15,11 +15,21 @@ const Header = (props) => {
             </Grid> */}
             <Grid is_flex padding="8px 16px">
                 <Grid is_flex>
-                    <Button width="80px" text="홈"></Button>
+                    <Button width="80px" text="홈" _onClick={()=>{
+                        history.push("/");
+                    }}></Button>
                 </Grid>
                 <Grid is_flex width="auto">
-                    <Button text="로그인" width="80px" margin="0 10px 0 0"></Button>
-                    <Button width="80px" text="회원가입"></Button>
+                    <Button text="로그인" width="80px" margin="0 10px 0 0" 
+                        _onClick={()=>{
+                            history.push("/login");
+                        }}
+                    ></Button>
+                    <Button width="80px" text="회원가입"
+                        _onClick={()=>{
+                            history.push("/signup");
+                        }}
+                    ></Button>
                 </Grid>
             </Grid>
         </React.Fragment>
