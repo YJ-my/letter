@@ -13,7 +13,7 @@ const rootReducer = combineReducers({ //우리가 만든 리듀서 뭉치기
     router: connectRouter(history),
 });
 
-const middlewares = [thunk.withExtraArgument({history:history})]; //내가 사용할 미들웨어 넣기위해 배열형태
+const middlewares = [thunk.withExtraArgument({history: history})]; //내가 사용할 미들웨어 넣기위해 배열형태
 
 // 지금이 어느 환경인 지 알려줘요. (개발환경, 프로덕션(배포)환경 ...)
 const env = process.env.NODE_ENV;
