@@ -21,6 +21,22 @@ const initialState = {
 };
 
 
+//회원가입
+export const signupAction = (username, password, nickname) => {
+    return function(dispatch, getState, {history}) {
+        console.log(username, password, nickname);
+
+    };
+};
+
+//로그인
+export const loginAction = (username, password) => {
+    return function(dispatch, getState, {history}) {
+        console.log(username, password);
+
+    };
+};
+
 
 export default handleActions ({
 
@@ -41,7 +57,8 @@ export default handleActions ({
 
 
 const actionCreators = { //액션 생성자 내보내기
-
+    signupAction,
+    loginAction
 };
 
 export {actionCreators};
