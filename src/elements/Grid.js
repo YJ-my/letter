@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Grid = (props) => {
-    const {is_flex, width, padding, margin, bg, center, border, radius, children, _onClick} = props;
+    const {is_flex, width, padding, margin, bg, center, border, radius, min_height, children, _onClick} = props;
     const styles = {
         width: width,
         padding: padding,
@@ -12,6 +12,7 @@ const Grid = (props) => {
         is_flex: is_flex,
         border:border,
         radius:radius,
+        min_height: min_height,
     }
 
     return(
@@ -33,6 +34,7 @@ Grid.defaultProps = {
     border:"none",
     radius:"0",
     _onClick: () => {},
+    min_height:false,
 };
 
 const GridBox = styled.div`
@@ -50,6 +52,7 @@ const GridBox = styled.div`
     ${(props)=>props.center ? `text-align: center` : ''};
     border: ${(props) => props.border};
     border-radius: ${(props) => props.radius};
+    ${(props)=>props.min_height ? `min-height: ${props.min_height};` : ''};
 `;
 
 export default Grid;

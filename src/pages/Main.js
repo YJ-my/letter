@@ -7,6 +7,9 @@ const Main = (props) => {
     return(
         <React.Fragment>
             <Card/>
+            <Grid padding="20px">
+                <Button is_fixed>편지 쓰기</Button>
+            </Grid>            
         </React.Fragment>
     );
 }
