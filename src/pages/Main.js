@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Text, Button} from "../elements/index";
+import {Grid, Button} from "../elements/index";
 
 import Card from "../components/Card";
 

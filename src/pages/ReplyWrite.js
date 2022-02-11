@@ -1,41 +1,66 @@
 import React from "react";
 import styled from "styled-components";
-import {Grid, Button, Text, Fixed, Input} from "../elements/index";
-import { history } from "../redux/configureStore";
+import {Grid, Button, Text, Input} from "../elements/index";
 
 const ReplyWrite = (props) => {
-    const [contents, setContents] = React.useState("");
-    const changeContents =  (e) => {
+    const [contents, setContents] = React.useState('');
+    const changeContents = (e) => {
         setContents(e.target.value);
     };
+
     return(
         <React.Fragment>
-            <Text margin="0px" size="36px" bold>편지수정</Text><br></br>
-            <Grid bg="#eee" padding="20px" radius="10px" min_height="80vh">
-                <Grid>               
-                    <Grid min_height="80vh">
-                        <Grid is_flex>
-                            <Text>2022.02.11</Text>
-                        </Grid>
-                        <input type="checkbox" id="scales" name="scales"></input>
-                            <label for="scales">익명작성</label>
-                        <Grid>
-                            <Input
-                            value={contents}
-                            _onChange={changeContents}
-                            // label="게시글 내용"
-                            placeholder="편지 내용을 입력해주세요 :)"
-                            multiLine
-                            />
-                        </Grid>
-                    </Grid> 
-                    </Grid>
+            <Grid>
 
-                    <Button is_fixed _onClick={()=>{history.push("/post")}}>수정하기</Button>
+                <HarfDiv>                
+                    <Text size="25px">답장할 편지📮</Text>
+                    <Grid bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px">
+                        <Text overflow="scroll">
+                            안녕하세요 편지 내용입니다.
+                            안녕하세요 편지 내용입니다.안녕하세                        안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.
+    요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입                        안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.
+    안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.
+    니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.
+                        </Text>
+                    </Grid>
+                </HarfDiv>
+
+
+                <HarfDiv>                
+                    <Text size="25px">답장💌</Text>
+                    <Grid>
+                        <Input 
+                            value={contents} 
+                            _onChange={changeContents} 
+                            placeholder="답장을 작성해주세요 :-)" 
+                            multiLine 
+                        />
+                        <label>
+                            <input type="checkbox"/>
+                            익명으로 쓸래요
+                        </label>                   
+                    </Grid>
+                </HarfDiv>
+
+                <Grid padding="20px">
+                    <Button is_fixed>답장 쓰기</Button>
+                </Grid>
+
             </Grid>
 
         </React.Fragment>
     );
 };
+
+const HarfDiv = styled.div`
+    display: block;
+    width: 100%;
+    @media screen and (min-width: 769px) {
+        display: inline-block;
+        width: calc(50% - 20px);
+        margin: 0 10px
+    };
+`;
+
 
 export default ReplyWrite;
