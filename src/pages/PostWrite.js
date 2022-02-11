@@ -35,9 +35,8 @@ const PostWrite = (props) => {
                         </Grid>
                     </Grid> 
                     </Grid>
-                <Fixed bottom="10px">
-                    <Button width="calc(100%)" _onClick={()=>{history.push("/")}}>작성하기</Button>
-                </Fixed>
+
+                    <Button is_fixed _onClick={()=>{history.push("/")}}>작성하기</Button>
             </Grid>
 
         </React.Fragment>
