@@ -45,10 +45,11 @@ const ReplyWrite = (props) => {
                 <Grid padding="20px">
                     <Button is_fixed>답장 쓰기</Button>
                 </Grid>
+
             </Grid>
+
         </React.Fragment>
     );
-
 };
 
 const HarfDiv = styled.div`
