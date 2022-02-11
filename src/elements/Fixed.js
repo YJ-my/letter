@@ -14,7 +14,7 @@ const Fixed = (props) => {
     
     return(
         <React.Fragment>
-            <DefaultButton {...styles} onClick={_onClick}>{children}</DefaultButton>
+            <DefaultBox {...styles} onClick={_onClick}>{children}</DefaultBox>
         </React.Fragment>
     );
 };
@@ -29,13 +29,13 @@ Fixed.defaultProps = {
     left: "0",
 };
 
-const DefaultButton = styled.button`    
+const DefaultBox = styled.div`    
     width: ${(props) => props.width};
     ${(props) => (props.height? `height: ${props.height};` : '')};
     box-sizing: border-box;
     border: none;
     ${(props) => (props.margin? `margin: ${props.margin};` : '')};
-    position: fixed;
+    position: absolute;
     bottom: ${(props) => props.bottom};
     left: ${(props) => props.left};
 `;

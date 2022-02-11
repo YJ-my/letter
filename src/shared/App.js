@@ -24,12 +24,12 @@ function App() {
             <Route path="/signup" exact component={Signup}/> {/* 회원가입 페이지 */}
             <Route path="/write" exact component={PostWrite}/> {/* 글 작성 페이지 */}
             <Route path="/write/:id" exact component={PostWrite}/>{/* 글 수정 페이지 */}
-            {/* <Route path="/reply_write" exact component={ReplyWrite}/>답장작성페이지 */}
+            <Route path="/reply_write" exact component={ReplyWrite}/>{/* 답장작성페이지 */}
             {/*<Route path="/post/:id" exact component={PostDetail}/>상세페이지+답장*/}
             <Route path="/post" exact component={PostDetail}/>{/*상세페이지+답장 (작업용 임시)*/}
           </ConnectedRouter>             
         </Grid>
-        </Grid>
+      </Grid>
       </React.Fragment>
   );
 }
