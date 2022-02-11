@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 const Button = (props) => {
-    const {text, size, children, _onClick, margin, width, height, color, bg, padding , border} = props;
+    const {text, size, children, _onClick, margin, width, height, color, bg, padding , border, is_fixed} = props;
     const styles = {
         margin: margin,
         width: width,
@@ -13,8 +13,16 @@ const Button = (props) => {
         padding: padding,
         border: border,
         size:size,
+        is_fixed:is_fixed,
     }
+    if(is_fixed){
+        return(
+            <React.Fragment>
+                <FixedButton {...styles} type="button" onClick={_onClick}>{text? text: children}</FixedButton>
+            </React.Fragment>
+        ); 
 
+    }
     return(
         <React.Fragment>
             <DefaultButton {...styles} type="button" onClick={_onClick}>{text? text: children}</DefaultButton>
@@ -34,6 +42,7 @@ Button.defaultProps = {
     padding: "12px 0px",
     border:"none",
     size:"",
+    is_fixed:false,
 };
 
 const DefaultButton = styled.button`    
@@ -50,6 +59,21 @@ const DefaultButton = styled.button`
     cursor: pointer;
     z-index: 2;
     ${(props) => (props.size? `font-size: ${props.size};` : '')};
+`;
+
+
+const FixedButton = styled.button`
+    width: 100%;
+    height: 50px;
+    background-color: #000;
+    color: white;
+    font-size: 16px;
+    border: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
 `;
 
 export default Button;
