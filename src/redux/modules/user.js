@@ -1,16 +1,19 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import moment from "moment"
+import axios from "axios";
+import { history } from "../configureStore";
+import { setToken, getToken, delToken } from "../../shared/token";
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
-const GET_USER = "GET_USER";
+const SET_USER = "SET_USER";
 const SIGN_UP = "SIGN_UP";
 
 
-const login = createAction(LOGIN, (user)=>({user}));
-const logout = createAction(LOGOUT, (user) => ({user}));
-const getUser = createAction(GET_USER, (user) => ({user}));
+const logIn = createAction(LOGIN, (user)=>({user}));
+const logOut = createAction(LOGOUT, (user) => ({user}));
+const setUser = createAction(SET_USER, (username, is_login) => ({username, is_login}));
 const signUp = createAction(SIGN_UP, (user) => ({user}));
 
 
@@ -18,37 +21,114 @@ const initialState = {
     userInfo:{
         username: "유저아이디",
     },
-    result : false,
+    is_login : false,
 };
 
 
-//회원가입
+//회원가입 요청 post
 export const signupAction = (username, password, nickname) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password, nickname);
+        const frm = new FormData()
+        frm.append('username', username);
+        frm.append('password', password);
+        frm.append('nickname', nickname);
+
+        axios.post('https://domain/user/signup',frm) 
+        .then((response) => {
+            window.alert("회원가입 되셨습니다.");
+            history.push("/login");
+        }).catch((error) => {
+            window.alert("회원가입 오류입니다!", error);
+        });    
 
     };
 };
 
-//로그인
+
+//로그인 요청 post
 export const loginAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
 
+        const frm = new FormData()
+        frm.append('username', username);
+        frm.append('password', password);
+
+        axios.post('https://domain/user/login',frm)
+        .then(function (response) {
+            console.log(response.data);
+
+            const token = response.headers.authorization;
+            setToken(token);
+            console.log("토큰저장완료!");
+
+            const is_login = true;
+            dispatch(
+                setUser({is_login,username})
+            );
+            history.push("/");
+            
+        }).catch((error) => {
+            window.alert("로그인오류입니다!", error);
+        })
+    };
+};
+
+//로그인 여부 확인 get
+// export const loginCheckAction = (username, password) => {
+//     return function(dispatch, getState, {history}) {
+//         console.log(username, password);
+//         axios
+//         .get("https://domain/user/islogin")
+//         .then(function (response) {
+//             const is_login = true; // 로그인 상태
+//             const username = response.data.userInfo.username; // 사용자 정보
+//             localStorage.setItem('username', username)
+
+//             dispatch(getUser(is_login, username));
+//         })
+//         .catch(function (error) {
+//             console.log("로그인 여부 확인 실패", error);
+//         }).then(function() {
+//             // 항상 실행
+//         });
+//     };
+// };
+
+
+//로그아웃 get
+export const loginOutAction = (username, password) => {
+    return function(dispatch, getState, {history}) {
+        console.log(username, password);
+        axios.get("https://domain/user/logout")
+        .then((response) =>{
+            delToken(); //토큰 삭제해주기
+            dispatch(logOut());
+            console.log("로그아웃 성공");
+            window.location.reload();
+        }).catch(function (error) {
+            window.alert("로그아웃 실패");
+        })
     };
 };
 
 
+
+
 export default handleActions ({
 
-    [LOGIN]: (state, action) => produce(state, (draft) => {
+    // [LOGIN]: (state, action) => produce(state, (draft) => {
 
-    }),
+    // }),
     [LOGOUT]: (state, action) => produce(state, (draft) => {
-
+        draft.username = null;
+        draft.is_login = false;
     }),
-    [GET_USER]: (state, action) => produce(state, (draft) => {
-
+    [SET_USER]: (state, action) => produce(state, (draft) => {
+        //console.log(action.payload.username);
+        draft.username = action.payload.username;
+        draft.is_login = true;
     }),
     [SIGN_UP]: (state, action) => produce(state, (draft) => {
 
@@ -59,7 +139,8 @@ export default handleActions ({
 
 const actionCreators = { //액션 생성자 내보내기
     signupAction,
-    loginAction
+    loginAction,
+    loginOutAction,
 };
 
 export {actionCreators};
