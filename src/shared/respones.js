@@ -37,5 +37,20 @@ export const RESP = {
             },
         ],
     },
+    USER: {
+        result: true, //유저정보가 잘 왔어!
+        list: [
+            {
+                uid : "user000321",
+                user_id: "123123@naver.com",
+                user_name : "jini",
+            },
+            {
+                uid : "user000001",
+                user_id: "hello_world@gmail.com",
+                user_name : "안지니입니다",                
+            },
+        ],
+    },
 
 }

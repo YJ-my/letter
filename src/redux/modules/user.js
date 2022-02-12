@@ -1,9 +1,10 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import moment from "moment"
-import axios from "axios";
+// import axios from "axios";
 import { history } from "../configureStore";
 import { setToken, getToken, delToken } from "../../shared/token";
+import apis from "../../shared/apis";
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
@@ -28,14 +29,15 @@ const initialState = {
 //회원가입 요청 post
 export const signupAction = (username, password, nickname) => {
     return function(dispatch, getState, {history}) {
-        console.log(username, password, nickname);
-        const frm = new FormData()
+        //console.log(username, password, nickname);
+        const frm = new FormData();
         frm.append('username', username);
         frm.append('password', password);
         frm.append('nickname', nickname);
 
-        axios.post('https://domain/user/signup',frm) 
+        apis.post('/user/signup',frm)
         .then((response) => {
+            console.log(response.data,"회원가입요청");
             window.alert("회원가입 되셨습니다.");
             history.push("/login");
         }).catch((error) => {
@@ -55,13 +57,13 @@ export const loginAction = (username, password) => {
         frm.append('username', username);
         frm.append('password', password);
 
-        axios.post('https://domain/user/login',frm)
+        apis.post('/user/login',frm)
         .then(function (response) {
-            console.log(response.data);
+            console.log(response.data, "로그인요청");
 
             const token = response.headers.authorization;
             setToken(token);
-            console.log("토큰저장완료!");
+            console.log(token,"토큰저장완료!");
 
             const is_login = true;
             dispatch(
@@ -101,8 +103,9 @@ export const loginAction = (username, password) => {
 export const loginOutAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
-        axios.get("https://domain/user/logout")
+        apis.get("/user/logout")
         .then((response) =>{
+            console.log(response,"로그아웃");
             delToken(); //토큰 삭제해주기
             dispatch(logOut());
             console.log("로그아웃 성공");

@@ -7,14 +7,20 @@ const PostDetail = (props) => {
     const postList = useSelector((state) => state.post.list);
     //console.log(postList);
 
-    const params_id = props.match.params.post_id;
+    const params_id = props.match.params.id;
 
     const post_idx = postList.findIndex((p) => p.post_id === params_id);
     const post = postList[post_idx];
 
+    React.useEffect(() => {
+        if(post){
+           return; 
+        }        
+    }, []);
     
     return(
         <React.Fragment>
+            
             <Grid >
                 <Grid is_scroll >               
                     <Grid  min_height="85vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
@@ -52,11 +58,13 @@ const PostDetail = (props) => {
                                     <Text>어쩌구 저쩌구 답장2입니다.</Text>
                                 </Grid>
                             </Grid> 
-                     
+                    
                     </Grid>
                     {/* 답장영역 끝 */}
                 </Grid>                
             </Grid>
+           
+            
         </React.Fragment>
     );
 
