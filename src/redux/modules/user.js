@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import moment from "moment"
 // import axios from "axios";
 import { history } from "../configureStore";
 import { setToken, getToken, delToken } from "../../shared/token";
@@ -9,13 +8,13 @@ import apis from "../../shared/apis";
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
 const SET_USER = "SET_USER";
-const SIGN_UP = "SIGN_UP";
+// const SIGN_UP = "SIGN_UP";
 
 
 const logIn = createAction(LOGIN, (user)=>({user}));
 const logOut = createAction(LOGOUT, (user) => ({user}));
 const setUser = createAction(SET_USER, (username, is_login) => ({username, is_login}));
-const signUp = createAction(SIGN_UP, (user) => ({user}));
+// const signUp = createAction(SIGN_UP, (user) => ({user}));
 
 
 const initialState = {
@@ -27,21 +26,22 @@ const initialState = {
 
 
 //회원가입 요청 post
-export const signupAction = (username, password, nickname) => {
+export const signupAction = (username, nickname, password) => {
     return function(dispatch, getState, {history}) {
         //console.log(username, password, nickname);
         const frm = new FormData();
         frm.append('username', username);
-        frm.append('password', password);
         frm.append('nickname', nickname);
+        frm.append('password', password);        
 
         apis.post('/user/signup',frm)
         .then((response) => {
-            console.log(response.data,"회원가입요청");
+            console.log(response,"회원가입요청");
             window.alert("회원가입 되셨습니다.");
             history.push("/login");
         }).catch((error) => {
-            window.alert("회원가입 오류입니다!", error);
+            window.alert("회원가입 오류입니다!", error.message);
+            
         });    
 
     };
@@ -58,8 +58,8 @@ export const loginAction = (username, password) => {
         frm.append('password', password);
 
         apis.post('/user/login',frm)
-        .then(function (response) {
-            console.log(response.data, "로그인요청");
+        .then((response) => {
+            console.log(response.headers, "로그인요청");
 
             const token = response.headers.authorization;
             setToken(token);
@@ -133,9 +133,9 @@ export default handleActions ({
         draft.username = action.payload.username;
         draft.is_login = true;
     }),
-    [SIGN_UP]: (state, action) => produce(state, (draft) => {
+    // [SIGN_UP]: (state, action) => produce(state, (draft) => {
 
-    }),
+    // }),
 
 },initialState);
 

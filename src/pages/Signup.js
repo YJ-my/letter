@@ -35,7 +35,8 @@ const Signup = (props) => {
     }
     
     console.log("회원가입완료!");
-    dispatch(userActions.signupAction(id,pwd,nick_name));
+    //dispatch(userActions.signupAction(id,pwd,nick_name));
+    dispatch(userActions.signupAction(id,nick_name,pwd));
   }; 
   
 

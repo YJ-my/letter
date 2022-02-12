@@ -24,7 +24,7 @@ const Login = (props) => {
         return;
       }
   
-      dispatch(userActions.loginAction(id, pwd));
+      dispatch(userActions.loginAction(id,pwd));
     };
   
     return (

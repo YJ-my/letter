@@ -3,7 +3,7 @@ import { getToken } from "./token";
 
 const apis = axios.create({
   baseURL:
-    "http://15.164.251.132" /*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/,
+    "http://15.164.251.132", /*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
 
   //withCredentials: true,//자격요건: 쿠키
 });
@@ -27,8 +27,5 @@ apis.interceptors.request.use((config) => {
   config.headers.Accept = "application/json";
   return config;
 });
-
-
-
 
 export default apis;
