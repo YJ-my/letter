@@ -15,9 +15,7 @@ const Card = (props) => {
                         <Text margin="0 0 10px 0"><b>{props.replyCount}</b>개의 답장</Text>
                         <hr/>
                     </Grid>
-                    <Grid _onClick={()=> {
-                            history.push(`/post/${props.post_id}`);
-                        }}>
+                    <Grid>
                         <Text><b>{props.nickname}</b>님으로부터</Text>
                         <Text margin="10px 0 0 0">{props.content}</Text>
                     </Grid>

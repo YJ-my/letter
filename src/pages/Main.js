@@ -15,10 +15,10 @@ const Main = (props) => {
 
     return(
         <React.Fragment>
-            {postList.map((item, idx) => {
+            {postList.map((p, idx) => {
                 return(
                     <Card 
-                        {...item}
+                        {...p}
                         key={idx}
                     />
                 );
