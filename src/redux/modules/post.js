@@ -20,7 +20,16 @@ const initialState = {
 const initalPost = {
     content:"안녕하세요 편지써봅니다.",
     nickname:"닉네임",
-    anonymous:false,
+    anonymous:false, //익명여부
+};
+
+
+const addPostDB = () => {
+    return function (dispatch, getState, {history}) {
+        const _user = getState.user.user;
+
+    };
+
 };
 
 

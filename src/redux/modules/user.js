@@ -13,6 +13,7 @@ const logout = createAction(LOGOUT, (user) => ({user}));
 const getUser = createAction(GET_USER, (user) => ({user}));
 const signUp = createAction(SIGN_UP, (user) => ({user}));
 
+
 const initialState = {
     userInfo:{
         username: "유저아이디",
