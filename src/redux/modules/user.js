@@ -4,6 +4,7 @@ import { produce } from "immer";
 import { history } from "../configureStore";
 import { setToken, getToken, delToken } from "../../shared/token";
 import apis from "../../shared/apis";
+import { setAuthorizationToken } from "../../shared/setAuthorizationToken";
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
@@ -61,8 +62,10 @@ export const loginAction = (username, password) => {
         .then((response) => {
             console.log(response.headers, "로그인요청");
 
-            const token = response.headers.authorization;
+            //const token = response.headers.authorization;
+            const token = response.headers["authorization"];
             setToken(token);
+            setAuthorizationToken(token);
             console.log(token,"토큰저장완료!");
 
             const is_login = true;

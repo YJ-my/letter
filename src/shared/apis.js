@@ -2,9 +2,12 @@ import axios from "axios";
 import { getToken } from "./token";
 
 const apis = axios.create({
-  baseURL:
-    "http://15.164.251.132", /*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
-
+    baseURL:
+        "http://15.164.251.132", /*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
+    headers: {
+        "content-type": "application/json;charset=UTF-8",
+        accept: "application/json",
+    },
   //withCredentials: true,//자격요건: 쿠키
 });
 
@@ -20,12 +23,10 @@ const apis = axios.create({
 //Accept : 클라이언트 자신이 원하는 미디어 타입 및 우선순위를 알린다.
 // `headers`는 서버에 전송 될 사용자 정의 헤더 입니다. headers: { 'X-Requested-With': 'XMLHttpRequest' }
 
-apis.interceptors.request.use((config) => {
-  config.headers["Content-Type"] = "application/json; charset=utf-8";
-  config.headers["X-Requested-With"] = "XMLHttpRequest";
-  config.headers["authorization"] = getToken() ? `${getToken()}` : "";
-  config.headers.Accept = "application/json";
-  return config;
+apis.interceptors.request.use(function (config) {
+    const accessToken = document.cookie.split("=")[1];
+    config.headers.common["authorization"] = `${accessToken}`;
+    return config;
 });
 
 export default apis;
