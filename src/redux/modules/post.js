@@ -2,6 +2,9 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import moment from "moment"
 import {RESP} from "../../shared/respones";
+import { getToken } from "../../shared/token";
+import apis from "../../shared/apis";
+
 
 const GET_POST = "GET_POST";
 const ADD_POST = "ADD_POST";
@@ -22,41 +25,70 @@ const initalPost = {
     content:"안녕하세요 편지써봅니다.",
     nickname:"닉네임",
     anonymous:false, //익명여부
+    modifiedAt:"2202-02-12",
 };
 
 const getPostDB = () => {
-    return function (dispatch, getState, {history}) {
-        //console.log(RESP.POST.list);
+    return async function (dispatch, getState, {history}) {
         
-        const DB = RESP.POST.list;       
+        await apis.get(`/api/posts`).then((respones)=>{
+            console.log(respones.data);
 
-        let post_list = [];
-        
-        DB.forEach((_post) => {
-            //console.log(doc.post_id, doc.content);
+            let post_list = [];
 
-            const post = {
-                post_id : _post.postId,
-                content: _post.content,
-                modifiedAt: _post.modifiedAt,
-                nickname: _post.nickname,
-                replyCount: _post.replyCount,            
-            };
+            respones.data.post.forEach((_post)=>{
+                const post = {
+                    post_id : _post.postId,
+                    content: _post.content,
+                    modifiedAt: _post.modifiedAt,
+                    nickname: _post.nickname,
+                    replyCount: _post.replyCount,            
+                };
 
-            //console.log(post);
-
-            post_list.push(post);            
-        });
-
-        dispatch(getPost(post_list));
+                post_list.push(post);
+            });
+            console.log(post_list);
+            dispatch(getPost(post_list));
+        });     
     }
 }
 
-const addPostDB = (content, nickname, anonymous) => {
-    return function (dispatch, getState, {history}) {
-        console.log(content, nickname, anonymous);
+const addPostDB = (content, anonymous, uid ) => {
+    return async function (dispatch, getState, {history}) {
+        //console.log(content, anonymous, uid);
+        const _user = getState().user.user; 
+
+        const user_info = {
+            nickname: _user.nickname,  // 유저 닉네임
+            username: _user.username, //유저 아이디
+        };
+        const _post = {
+            ...initalPost,
+            content:content,
+            anonymous:anonymous,
+            uid:uid,
+        }
+        //console.log(_post)
+
+        const token = getToken();
+        //console.log(token,"포스트작성 토큰확인");
+
+        await apis.post(`/api/posts`, {
+            content : _post.content,
+            anonymous : _post.anonymous,
+            uid : _post.uid
+        }).then((respones)=>{
+            console.log(respones.data,"포스트 성공 데이터");
+            window.alert("편지 전달 성공 :)");
+            history.push("/");
+        }).catch((error)=>{
+            window.alert("편지 발송에 실패했습니다 :(");
+            console.log("포스트 작성 에러",error);
+        });
     };
 };
+
+
 
 
 
@@ -67,7 +99,8 @@ export default handleActions ({
         draft.list = action.payload.post_list;
     }),
     [ADD_POST]: (state, action) => produce(state, (draft) => {
-
+        draft.list = action.payload.post
+        console.log(draft.list)
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
 
