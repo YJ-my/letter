@@ -1,20 +1,29 @@
 import React from "react";
-import styled from "styled-components";
 import {Grid, Button, Text, Fixed} from "../elements/index";
+import { useSelector } from "react-redux";
 import "../shared/post.css";
 
 const PostDetail = (props) => {
+    const postList = useSelector((state) => state.post.list);
+    //console.log(postList);
+
+    const params_id = props.match.params.post_id;
+
+    const post_idx = postList.findIndex((p) => p.post_id === params_id);
+    const post = postList[post_idx];
+
+    
     return(
         <React.Fragment>
             <Grid >
                 <Grid is_scroll >               
                     <Grid  min_height="85vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
                         <Grid is_flex>
-                            <Text>2022.02.11</Text>
-                            <Text bold>닉네임</Text>
+                            <Text>{props.modifiedAt}</Text>
+                            <Text bold>{props.nickname}</Text>
                         </Grid>
                         <Grid>
-                            <Text>어쩌구 저쩌구 내용입니다.</Text>
+                            <Text>{props.content}</Text>
                         </Grid>
                         <Fixed bottom="10px">
                             <Button width="calc(50% - 10px)" margin="0 10px 0 0">수정</Button>
