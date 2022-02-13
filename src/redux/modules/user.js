@@ -4,6 +4,7 @@ import { produce } from "immer";
 import { history } from "../configureStore";
 import { setToken, getToken, delToken } from "../../shared/token";
 import apis from "../../shared/apis";
+import { userApis } from "../../shared/apis";
 import { setAuthorizationToken } from "../../shared/setAuthorizationToken";
 
 const LOGIN = "LOGIN";
@@ -30,12 +31,15 @@ const initialState = {
 export const signupAction = (username, nickname, password) => {
     return function(dispatch, getState, {history}) {
         //console.log(username, password, nickname);
+        
         const frm = new FormData();
         frm.append('username', username);
         frm.append('nickname', nickname);
-        frm.append('password', password);        
+        frm.append('password', password);     
+        
+        // console.log(frm.get('username'));
 
-        apis.post('/user/signup',frm)
+        userApis.signup(frm)
         .then((response) => {
             console.log(response,"회원가입요청");
             window.alert("회원가입 되셨습니다.");
@@ -54,11 +58,11 @@ export const loginAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
 
-        const frm = new FormData()
-        frm.append('username', username);
-        frm.append('password', password);
+        // const frm = new FormData()
+        // frm.append('username', username);
+        // frm.append('password', password);
 
-        apis.post('/user/login',frm)
+        userApis.login(username, password)
         .then((response) => {
             console.log(response.headers, "로그인요청");
 

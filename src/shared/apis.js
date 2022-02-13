@@ -2,13 +2,15 @@ import axios from "axios";
 import { getToken } from "./token";
 
 const apis = axios.create({
-    baseURL:
-        "http://15.164.251.132", /*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
+    // baseURL:
+    //     "http://15.164.251.132", /*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
     headers: {
-        "content-type": "application/json;charset=UTF-8",
-        accept: "application/json",
-    },
-  //withCredentials: true,//자격요건: 쿠키
+        // "content-type": "application/json;charset=UTF-8",
+        // accept: "application/json",
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        accept: "*/*",
+    },   
+    // withCredentials: true, //자격요건: 쿠키
 });
 
 // 쿠키를 요청에 포함하고 싶으면 다음 2가지 작업을 해주면 됩니다.
@@ -23,10 +25,33 @@ const apis = axios.create({
 //Accept : 클라이언트 자신이 원하는 미디어 타입 및 우선순위를 알린다.
 // `headers`는 서버에 전송 될 사용자 정의 헤더 입니다. headers: { 'X-Requested-With': 'XMLHttpRequest' }
 
-apis.interceptors.request.use(function (config) {
-    const accessToken = document.cookie.split("=")[1];
-    config.headers.common["authorization"] = `${accessToken}`;
+// apis.interceptors.request.use(function (config) {
+//     const accessToken = document.cookie.split("=")[1];
+//     config.headers.common["authorization"] = `${accessToken}`;
+//     return config;
+// });  
+
+apis.interceptors.request.use((config) => {
+    config.headers["Content-Type"] = "application/json; charset=utf-8";
+    config.headers["X-Requested-With"] = "XMLHttpRequest";
+    config.headers["authorization"] = getToken() ? `${getToken()}` : "";
+    config.headers.Accept = "application/json";
     return config;
 });
+
+export const userApis = {
+    //로그인요청
+    login: (username, password) =>{
+        apis.post("/user/login", {username, password})
+    },
+
+    // 회원가입 요청
+    signup: (username, nickname, password ) =>
+        apis.post("/user/signup", {username, nickname, password})
+    ,
+    
+  
+}
+
 
 export default apis;

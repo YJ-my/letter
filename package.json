@@ -13,6 +13,7 @@
     "firebase": "^8.2.10",
     "global": "^4.4.0",
     "history": "^4.10.1",
+    "http-proxy-middleware": "^2.0.3",
     "immer": "^8.0.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
