@@ -3,6 +3,7 @@ import {Route} from "react-router-dom";
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from "../redux/configureStore";
 import {Grid} from '../elements/index';
+import '../shared/App.css';
 import Header from '../components/Header';
 import Main from '../pages/Main';
 import Login from '../pages/Login';
