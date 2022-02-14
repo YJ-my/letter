@@ -1,5 +1,5 @@
 const getToken = () => {
-    const token = sessionStorage.getItem("jwtToken");
+    const token = localStorage.getItem("token");
   
     if (token) {
       console.log(token);  
@@ -13,11 +13,11 @@ const getToken = () => {
     if (!token) {
       return false;
     }
-    sessionStorage.setItem("jwtToken", token);
+    localStorage.setItem("token", token);
   };
   
   const delToken = () => {
-    sessionStorage.removeItem("jwtToken");
+    localStorage.removeItem("token");
   };
   
   export { getToken, setToken, delToken };

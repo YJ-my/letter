@@ -2,12 +2,12 @@ import axios from "axios";
 import { getToken } from "./token";
 
 const apis = axios.create({
-    // baseURL:
-    //     "http://15.164.251.132", /*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
+    baseURL:
+        "http://15.164.251.132:8080", //*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
     headers: {
         // "content-type": "application/json;charset=UTF-8",
         // accept: "application/json",
-        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8", //form data로 변환하지 않아도 form으로 전송해줌
         accept: "*/*",
     },   
     // withCredentials: true, //자격요건: 쿠키
@@ -32,10 +32,10 @@ const apis = axios.create({
 // });  
 
 apis.interceptors.request.use((config) => {
-    config.headers["Content-Type"] = "application/json; charset=utf-8";
-    config.headers["X-Requested-With"] = "XMLHttpRequest";
+    // config.headers["Content-Type"] = "application/json; charset=utf-8";
+    //config.headers["X-Requested-With"] = "XMLHttpRequest";
     config.headers["authorization"] = getToken() ? `${getToken()}` : "";
-    config.headers.Accept = "application/json";
+    //config.headers.Accept = "application/json";
     return config;
 });
 
@@ -52,6 +52,16 @@ export const userApis = {
     
   
 }
+
+// export const postApis = {
+//     getPost: () => 
+//         apis.get(`/api/mains`)
+//     ,
+
+//     addPost: (content, anonymous, uid) => 
+//         apis.post("/api/posts", content, anonymous, uid)
+//     ,
+// }
 
 
 export default apis;

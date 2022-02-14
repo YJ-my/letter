@@ -1,10 +1,9 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import moment from "moment"
-import {RESP} from "../../shared/respones";
 import { getToken } from "../../shared/token";
 import apis from "../../shared/apis";
-
+//import { postApis } from "../../shared/apis";
 
 const GET_POST = "GET_POST";
 const ADD_POST = "ADD_POST";
@@ -31,60 +30,60 @@ const initalPost = {
 const getPostDB = () => {
     return async function (dispatch, getState, {history}) {
         
-        await apis.get(`/api/mains`).then((respones)=>{
-            console.log(respones.data);
+        // await postApis.get(`/api/mains`).then((respones)=>{
+        //     //console.log(respones.data);
 
-            let post_list = [];
+        //     let post_list = [];
 
-            respones.data.post.forEach((_post)=>{
-                const post = {
-                    post_id : _post.postId,
-                    content: _post.content,
-                    modifiedAt: _post.modifiedAt,
-                    nickname: _post.nickname,
-                    replyCount: _post.replyCount,            
-                };
+        //     respones.data.post.forEach((_post)=>{
+        //         const post = {
+        //             post_id : _post.postId,
+        //             content: _post.content,
+        //             modifiedAt: _post.modifiedAt,
+        //             nickname: _post.nickname,
+        //             replyCount: _post.replyCount,            
+        //         };
 
-                post_list.push(post);
-            });
-            console.log(post_list);
-            dispatch(getPost(post_list));
-        });     
+        //         post_list.push(post);
+        //     });
+        //     console.log(post_list);
+        //     dispatch(getPost(post_list));
+        // });     
     }
 }
 
 const addPostDB = (content, anonymous, uid ) => {
     return async function (dispatch, getState, {history}) {
         //console.log(content, anonymous, uid);
-        const _user = getState().user.user; 
+        // const _user = getState().user.user; 
 
-        const user_info = {
-            nickname: _user.nickname,  // 유저 닉네임
-            username: _user.username, //유저 아이디
-        };
-        const _post = {
-            ...initalPost,
-            content:content,
-            anonymous:anonymous,
-            uid:uid,
-        }
-        //console.log(_post)
+        // const user_info = {
+        //     nickname: _user.nickname,  // 유저 닉네임
+        //     username: _user.username, //유저 아이디
+        // };
+        // const _post = {
+        //     ...initalPost,
+        //     content:content,
+        //     anonymous:anonymous,
+        //     uid:uid,
+        // }
+        // //console.log(_post)
 
-        const token = getToken();
-        //console.log(token,"포스트작성 토큰확인");
+        // const token = getToken();
+        // //console.log(token,"포스트작성 토큰확인");
 
-        await apis.post(`/api/posts`, {
-            content : _post.content,
-            anonymous : _post.anonymous,
-            uid : _post.uid
-        }).then((respones)=>{
-            console.log(respones.data,"포스트 성공 데이터");
-            window.alert("편지 전달 성공 :)");
-            history.push("/");
-        }).catch((error)=>{
-            window.alert("편지 발송에 실패했습니다 :(");
-            console.log("포스트 작성 에러",error);
-        });
+        // await postApis.post(`/api/posts`, {
+        //     content : _post.content,
+        //     anonymous : _post.anonymous,
+        //     uid : _post.uid
+        // }).then((respones)=>{
+        //     console.log(respones.data,"포스트 성공 데이터");
+        //     window.alert("편지 전달 성공 :)");
+        //     history.push("/");
+        // }).catch((error)=>{
+        //     window.alert("편지 발송에 실패했습니다 :(");
+        //     console.log("포스트 작성 에러",error);
+        // });
     };
 };
 
