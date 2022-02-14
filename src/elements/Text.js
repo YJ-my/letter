@@ -61,6 +61,7 @@ const ScrollP = styled.p`
   @media screen and (max-width: 540px) {
     max-height: 150px;
   };
+  
 `;
 
 export default Text;

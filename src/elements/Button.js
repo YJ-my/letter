@@ -37,7 +37,7 @@ Button.defaultProps = {
     margin: false,
     width: "100%",
     height: '',
-    color: "white",
+    color: "black",
     bg: "#000",
     padding: "12px 0px",
     border:"none",
@@ -59,6 +59,7 @@ const DefaultButton = styled.button`
     cursor: pointer;
     z-index: 2;
     ${(props) => (props.size? `font-size: ${props.size};` : '')};
+    background-color: #FFD662;
 `;
 
 
@@ -66,6 +67,7 @@ const FixedButton = styled.button`
     width: 100%;
     height: 50px;
     background-color: #FFD662;
+    // color: black;
     color: #02343F;
     font-size: 16px;
     border: none;
@@ -74,6 +76,7 @@ const FixedButton = styled.button`
     left: 0;
     z-index: 2;
     cursor: pointer;
+    
 `;
 
 export default Button;

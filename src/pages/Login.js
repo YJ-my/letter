@@ -3,6 +3,7 @@ import { Text, Input, Grid, Button } from "../elements";
 import { useDispatch } from "react-redux";
 import { emailCheck } from "../shared/common";
 import { actionCreators as userActions } from "../redux/modules/user";
+import styled from "styled-components";
 
 const Login = (props) => {
     const dispatch = useDispatch();
@@ -29,8 +30,9 @@ const Login = (props) => {
   
     return (
       <React.Fragment>
+
         <Grid padding="16px">
-          <Text size="32px" bold>
+          <Text size="32px" color="#F0EDCC" bold >
             로그인
           </Text>
   
@@ -64,6 +66,7 @@ const Login = (props) => {
             disabled={id === "" || pwd === "" ? true : false}
           ></Button>
         </Grid>
+
       </React.Fragment>
     );
   };
