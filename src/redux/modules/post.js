@@ -31,7 +31,7 @@ const initalPost = {
 const getPostDB = () => {
     return async function (dispatch, getState, {history}) {
         
-        await apis.get(`/api/posts`).then((respones)=>{
+        await apis.get(`/api/mains`).then((respones)=>{
             console.log(respones.data);
 
             let post_list = [];
