@@ -13,34 +13,30 @@ const apis = axios.create({
 
 
 const temp  = axios.create({
+    baseURL:
+        "http://15.164.251.132:8080",
     withCredentials: true,
     headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8", //form data로 변환하지 않아도 form으로 전송해줌
         accept: "*/*",
-    },  
-
+    },
 });
 
 apis.interceptors.request.use((config) => {  
     console.log(document.cookie);  
-    //config.headers["authorization"] = getToken() ? `${getToken()}` : "";
+    config.headers["authorization"] = getToken() ? `${getToken()}` : "";
     return config;
 });
 
-const login_headers = {
-    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-    accept: "*/*",
-};
 
 export const userApis = {
     //로그인요청
-    login: (username, password) =>{
-        temp.post("/user/login", {username, password})
+    login: (params) =>{
+        temp.post("/user/login", params)
     },
-
     // 회원가입 요청
-    signup: (username, nickname, password ) =>
-        temp.post("/user/signup", {username, nickname, password})
+    signup: (params) =>
+        temp.post("/user/signup", params)
     ,
     logout: () => {
         apis.get("/user/logout");

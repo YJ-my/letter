@@ -31,7 +31,12 @@ export const signupAction = (username, nickname, password) => {
     return function(dispatch, getState, {history}) {
         //console.log(username, password, nickname);
 
-        userApis.signup(username, nickname, password)
+        const params = new URLSearchParams();
+        params.append('username', username);
+        params.append('nickname', nickname);   
+        params.append('password', password);     
+
+        userApis.signup(params)
         .then((response) => {
             console.log(response,"회원가입요청");
             window.alert("회원가입 되셨습니다.");
@@ -50,15 +55,19 @@ const loginAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
 
-        userApis.login(username, password)
+        const params = new URLSearchParams();
+        params.append('username', username);
+        params.append('password', password);
+
+        userApis.login(params)
         .then((response) => {
             console.log(response.headers.authorization, "로그인토큰확인");
 
-            // const token = response.headers.authorization;
-            // console.log(typeof token);
-            // setToken(token);
-            // console.log("토큰저장완료!");
-            // window.alert("로그인 성공 🔥");
+            const token = response.headers.authorization;
+            console.log(typeof token);
+            setToken(token);
+            console.log("토큰저장완료!");
+            window.alert("로그인 성공 🔥");
 
             const is_login = true;
             dispatch(
