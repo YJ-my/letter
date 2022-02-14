@@ -17,8 +17,8 @@ const Header = (props) => {
             <React.Fragment>
                 <Grid is_flex padding="8px 16px">
                     <Grid is_flex width="auto">
-                        <Text>우체국</Text>
-                        <Button width="80px" text="홈"></Button>
+                        <a href="/" style={{color:"#F0EDCC", textDecoration:"none"}}>우체국</a>
+                        {/* <Button width="80px" text="홈"></Button> */}
                     </Grid>
                     <Grid is_flex width="auto">
                         <Button text="로그아웃" width="80px"></Button>

@@ -2,8 +2,8 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 import axios from "axios";
-import apis from "../../shared/apis";
 import { userApis } from "../../shared/apis";
+
 import { setToken, delToken } from "../../shared/token";
 
 
@@ -20,10 +20,8 @@ const setUser = createAction(SET_USER, (username, is_login) => ({username, is_lo
 // const signUp = createAction(SIGN_UP, (user) => ({user}));
 
 
-const initialState = {
-    userInfo:{
-        username: "유저아이디",
-    },
+const initialState = {   
+    username: null,
     is_login : false,
 };
 
@@ -54,13 +52,13 @@ const loginAction = (username, password) => {
 
         userApis.login(username, password)
         .then((response) => {
-            console.log(response.headers.authorization, "로그인요청");
+            console.log(response.headers.authorization, "로그인토큰확인");
 
-            const token = response.headers.authorization;
-            console.log(typeof token);
-            setToken(token);
-            console.log("토큰저장완료!");
-            window.alert("로그인 성공 🔥");
+            // const token = response.headers.authorization;
+            // console.log(typeof token);
+            // setToken(token);
+            // console.log("토큰저장완료!");
+            // window.alert("로그인 성공 🔥");
 
             const is_login = true;
             dispatch(
@@ -97,13 +95,11 @@ const loginAction = (username, password) => {
 
 
 //로그아웃 get
-const loginOutAction = (username, password) => {
+const loginOutAction = () => {
     return function(dispatch, getState, {history}) {
-        console.log(username, password);
-        apis.get("/user/logout")
+        userApis.logout()
         .then((response) =>{
             console.log(response,"로그아웃");
-            delToken(); //토큰 삭제해주기
             dispatch(logOut());
             console.log("로그아웃 성공");
             window.location.reload();
@@ -124,6 +120,7 @@ export default handleActions ({
     [LOGOUT]: (state, action) => produce(state, (draft) => {
         draft.username = null;
         draft.is_login = false;
+        delToken();
     }),
     [SET_USER]: (state, action) => produce(state, (draft) => {
         //console.log(action.payload.username);
