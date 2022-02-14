@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Button} from "../elements/index";
+import {Grid, Button, Text} from "../elements/index";
 import { useDispatch , useSelector } from "react-redux";
 import { history } from "../redux/configureStore";
 import { actionCreators as userActions} from "../redux/modules/user";
@@ -16,7 +16,8 @@ const Header = (props) => {
         return(
             <React.Fragment>
                 <Grid is_flex padding="8px 16px">
-                    <Grid is_flex>
+                    <Grid is_flex width="auto">
+                        <Text>우체국</Text>
                         <Button width="80px" text="홈"></Button>
                     </Grid>
                     <Grid is_flex width="auto">
@@ -29,10 +30,11 @@ const Header = (props) => {
     return(
         <React.Fragment>
             <Grid is_flex padding="8px 16px">
-                <Grid is_flex>
-                    <Button width="80px" text="홈" _onClick={()=>{
+                <Grid is_flex width="auto">
+                    <a href="/" style={{color:"#F0EDCC", textDecoration:"none"}}>우체국</a>
+                    {/* <Button width="80px" text="우체국" color="#F0EDCC" _onClick={()=>{
                         history.push("/");
-                    }}></Button>
+                    }}></Button> */}
                 </Grid>
                 <Grid is_flex width="auto">
                     <Button text="로그인" width="80px" margin="0 10px 0 0" 
