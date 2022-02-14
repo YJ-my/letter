@@ -65,8 +65,8 @@ const DefaultButton = styled.button`
 const FixedButton = styled.button`
     width: 100%;
     height: 50px;
-    background-color: #000;
-    color: white;
+    background-color: #FFD662;
+    color: #02343F;
     font-size: 16px;
     border: none;
     position: fixed;

@@ -1,11 +1,12 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-// import axios from "axios";
-import { history } from "../configureStore";
-import { setToken, getToken, delToken } from "../../shared/token";
+
+import axios from "axios";
 import apis from "../../shared/apis";
 import { userApis } from "../../shared/apis";
-import { setAuthorizationToken } from "../../shared/setAuthorizationToken";
+import { setToken, delToken } from "../../shared/token";
+
+
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
@@ -31,15 +32,8 @@ const initialState = {
 export const signupAction = (username, nickname, password) => {
     return function(dispatch, getState, {history}) {
         //console.log(username, password, nickname);
-        
-        const frm = new FormData();
-        frm.append('username', username);
-        frm.append('nickname', nickname);
-        frm.append('password', password);     
-        
-        // console.log(frm.get('username'));
 
-        userApis.signup(frm)
+        userApis.signup(username, nickname, password)
         .then((response) => {
             console.log(response,"회원가입요청");
             window.alert("회원가입 되셨습니다.");
@@ -54,23 +48,19 @@ export const signupAction = (username, nickname, password) => {
 
 
 //로그인 요청 post
-export const loginAction = (username, password) => {
+const loginAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
 
-        // const frm = new FormData()
-        // frm.append('username', username);
-        // frm.append('password', password);
-
         userApis.login(username, password)
         .then((response) => {
-            console.log(response.headers, "로그인요청");
+            console.log(response.headers.authorization, "로그인요청");
 
-            //const token = response.headers.authorization;
-            const token = response.headers["authorization"];
+            const token = response.headers.authorization;
+            console.log(typeof token);
             setToken(token);
-            setAuthorizationToken(token);
-            console.log(token,"토큰저장완료!");
+            console.log("토큰저장완료!");
+            window.alert("로그인 성공 🔥");
 
             const is_login = true;
             dispatch(
@@ -107,7 +97,7 @@ export const loginAction = (username, password) => {
 
 
 //로그아웃 get
-export const loginOutAction = (username, password) => {
+const loginOutAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
         apis.get("/user/logout")
