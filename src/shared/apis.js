@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "./token";
-
+//테스트중
 const apis = axios.create({
     baseURL:
         "http://15.164.251.132:8080", //*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
