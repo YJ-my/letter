@@ -38,8 +38,8 @@ export const signupAction = (username, nickname, password) => {
         // params.append('password', password); 
 
         userApis.signup(username, nickname, password)
-        .then((response) => {
-            console.log(response,"회원가입요청");
+        .then((res) => {
+            console.log(res,"회원가입요청");
             window.alert("회원가입 되셨습니다.");
             history.push("/login");
         }).catch((error) => {
@@ -56,9 +56,13 @@ const loginAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
 
-        userApis.login(username, password)
-        .then((response) => {
-            console.log(response.headers.authorization, "로그인토큰확인");
+        const params = new URLSearchParams();
+        params.append('username', username);
+        params.append('password', password); 
+
+        userApis.login(params)
+        .then((res) => {
+            console.log(res.headers.authorization, "로그인토큰확인");
 
             // const token = response.headers.authorization;
             // console.log(typeof token);
@@ -66,10 +70,10 @@ const loginAction = (username, password) => {
             // console.log("토큰저장완료!");
             // window.alert("로그인 성공 🔥");
 
-            console.log(response.headers.get("set-cookie"));
-            const token = response.headers["authorization"];
-            setCookie("is_login", `${token}`);
-            setAuthorizationToken(token);
+            // console.log(response.headers.get("set-cookie"));
+            // const token = response.headers["authorization"];
+            // setCookie("is_login", `${token}`);
+            // setAuthorizationToken(token);
             window.alert("로그인 성공 🔥");
 
             const is_login = true;
@@ -78,8 +82,10 @@ const loginAction = (username, password) => {
             );
             history.push("/");
             
-        }).catch((error) => {
+        })
+        .catch((error) => {
             window.alert("로그인오류입니다!", error.response);
+            console.log("로그인오류입니다!", error.response);
         })
     };
 };
@@ -110,8 +116,8 @@ const loginAction = (username, password) => {
 const loginOutAction = () => {
     return function(dispatch, getState, {history}) {
         userApis.logout()
-        .then((response) =>{
-            console.log(response,"로그아웃");
+        .then((res) =>{
+            console.log(res,"로그아웃");
             dispatch(logOut());
             console.log("로그아웃 성공");
             window.location.reload();
