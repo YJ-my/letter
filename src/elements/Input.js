@@ -26,7 +26,7 @@ const Input = (props) => {
     return (
       <React.Fragment>
         <Grid>
-        {label && <Text margin="0px">{label}</Text>}
+        {label && <Text margin="0px" color="#ffffff">{label}</Text>}
           {is_submit ? (
           <ElInput
             type={type}
@@ -73,11 +73,15 @@ const ElTextarea = styled.textarea`
 
 const ElInput = styled.input`
     border: none;
+    border-bottom: 2px solid #F0EDCC;
+    transition: border-color 0.3s ease-in-out;
     width: 100%;
     padding: 12px 4px;
     box-sizing: border-box;
     border-radius: ${(props) => props.radius};
-    background-color:#eee;
+    background-color: inherit;
+    color:#ffffff
+    
 `;
 
 export default Input;

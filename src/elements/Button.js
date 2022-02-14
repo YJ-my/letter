@@ -37,7 +37,7 @@ Button.defaultProps = {
     margin: false,
     width: "100%",
     height: '',
-    color: "white",
+    color: "black",
     bg: "#000",
     padding: "12px 0px",
     border:"none",
@@ -67,7 +67,7 @@ const FixedButton = styled.button`
     width: 100%;
     height: 50px;
     background-color: #FFD662;
-    color: white;
+    color: black;
     font-size: 16px;
     border: none;
     position: fixed;

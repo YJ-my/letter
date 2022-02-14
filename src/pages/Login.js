@@ -30,9 +30,9 @@ const Login = (props) => {
   
     return (
       <React.Fragment>
-        <div className="background">
+
         <Grid padding="16px">
-          <Text size="32px" bold>
+          <Text size="32px" color="#F0EDCC" bold >
             로그인
           </Text>
   
@@ -66,7 +66,7 @@ const Login = (props) => {
             disabled={id === "" || pwd === "" ? true : false}
           ></Button>
         </Grid>
-        </div>
+
       </React.Fragment>
     );
   };
