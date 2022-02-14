@@ -67,6 +67,7 @@ const FixedButton = styled.button`
     width: 100%;
     height: 50px;
     background-color: #FFD662;
+    // color: black;
     color: #02343F;
     font-size: 16px;
     border: none;
