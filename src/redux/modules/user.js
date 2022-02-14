@@ -3,8 +3,9 @@ import { produce } from "immer";
 
 import axios from "axios";
 import { userApis } from "../../shared/apis";
-
+import {setAuthorizationToken} from "../../shared/setAuthorizationToken";
 import { setToken, delToken } from "../../shared/token";
+import {setCookie, getCookie, deleteCookie} from "../../shared/cookie";
 
 //깃 반영 테스트입니다.
 
@@ -30,6 +31,11 @@ const initialState = {
 export const signupAction = (username, nickname, password) => {
     return function(dispatch, getState, {history}) {
         //console.log(username, password, nickname);
+        
+        // const params = new URLSearchParams();
+        // params.append('username', username);
+        // params.append('nickname', nickname);   
+        // params.append('password', password); 
 
         userApis.signup(username, nickname, password)
         .then((response) => {
@@ -60,6 +66,12 @@ const loginAction = (username, password) => {
             // console.log("토큰저장완료!");
             // window.alert("로그인 성공 🔥");
 
+            console.log(response.headers.get("set-cookie"));
+            const token = response.headers["authorization"];
+            setCookie("is_login", `${token}`);
+            setAuthorizationToken(token);
+            window.alert("로그인 성공 🔥");
+
             const is_login = true;
             dispatch(
                 setUser({is_login,username})
@@ -67,7 +79,7 @@ const loginAction = (username, password) => {
             history.push("/");
             
         }).catch((error) => {
-            window.alert("로그인오류입니다!", error);
+            window.alert("로그인오류입니다!", error.response);
         })
     };
 };

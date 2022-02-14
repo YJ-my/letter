@@ -1,20 +1,21 @@
 import axios from "axios";
 import { getToken } from "./token";
-//테스트중
+import { getCookie } from "./cookie";
+
 const apis = axios.create({
     baseURL:
         "http://15.164.251.132:8080", //*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
     headers: {
-        "content-type": "application/json; charset=UTF-8",
-        accept: "application/json",
+        "Content-type": "application/json; charset=UTF-8",
+        //accept: "application/json",
     },   
-    withCredentials: true, //자격요건: 쿠키
+    //withCredentials: true, //자격요건: 쿠키
 });
 
 
 const temp  = axios.create({
-    baseURL:
-        "http://15.164.251.132:8080",
+    // baseURL:
+    //     "http://15.164.251.132:8080",
     withCredentials: true,
     headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8", //form data로 변환하지 않아도 form으로 전송해줌
@@ -24,7 +25,9 @@ const temp  = axios.create({
 
 apis.interceptors.request.use((config) => {  
     console.log(document.cookie);  
-    config.headers["authorization"] = getToken() ? `${getToken()}` : "";
+    const accessToken = document.cookie.split("=")[1];
+    config.headers.common["authorization"] = `${accessToken}`;
+    //config.headers["authorization"] = getToken() ? `${getToken()}` : "";
     return config;
 });
 
@@ -32,11 +35,11 @@ apis.interceptors.request.use((config) => {
 export const userApis = {
     //로그인요청
     login: (params) =>{
-        temp.post("/user/login", params)
+        apis.post("/user/login", params)
     },
     // 회원가입 요청
-    signup: (params) =>
-        temp.post("/user/signup", params)
+    signup: (username, nickname, password) =>
+        apis.post("/user/signup", {username, nickname, password})
     ,
     logout: () => {
         apis.get("/user/logout");
