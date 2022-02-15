@@ -1,38 +1,44 @@
 import axios from "axios";
-import { getCookie } from "./cookie";
 
-const token = getCookie("authorization");
-console.log(getCookie("authorization"));
-
+const tokenCheck = document.cookie;
+const token = tokenCheck.split("=")[1];
 
 const apis = axios.create({
     baseURL:
         "http://15.164.251.132:8080", //*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
+    headers: {
+        "content-type": "application/json;charset=UTF-8",
+        accept: "application/json,",
+        token: token,
+    },
 });
 
 apis.interceptors.request.use(function (config) {
-    config.headers["Content-Type"] =
-    "application/json;charset=UTF-8; charset=UTF-8";
-    config.headers.common["authorization"] = `${token}`;
+    const accessToken = document.cookie.split("=")[1];
+    config.headers.common["authorization"] = `${accessToken}`;
     return config;
 });
 
 
 
-
 export const userApis = {
     //로그인요청
-    login: (frm) =>
-        apis.post("/user/login", frm)
+    login: (username, password) =>
+        apis.post("/user/login", {username:username, password:password})
     ,
     // 회원가입 요청
     signup: (username, nickname, password) =>
-        apis.post("/user/signup", {username, nickname, password})
+        apis.post("/user/signup", {
+            username:username,
+            nickname:nickname, 
+            password:password
+        })
     ,
-    logout: () => {
-        apis.get("/user/logout");
-    },
-    
+    //유저정보 백단에서 가져오기
+    userInfo: (token) =>
+        apis.post("/user/islogin", {
+        authorization: token,
+    }),
   
 }
 

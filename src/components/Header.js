@@ -1,54 +1,84 @@
 import React from "react";
+import styled from "styled-components";
 import {Grid, Button, Text} from "../elements/index";
 import { useDispatch , useSelector } from "react-redux";
 import { history } from "../redux/configureStore";
 import { actionCreators as userActions} from "../redux/modules/user";
+import { BsMailbox } from "react-icons/bs";
+import { BiLogIn } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
+import { FaUserPlus } from "react-icons/fa";
+
 
 
 const Header = (props) => {
     const dispatch = useDispatch();
     const is_login = useSelector((state) => state.user.is_login);
-    const user_info = useSelector((state) => state.user.user);
-
-    
+    const user_info = useSelector((state) => state.user.user);    
 
     if(is_login){ //로그인이 됐다면
         return(
             <React.Fragment>
-                <Grid is_flex padding="8px 16px">
+                <HeaderGrid>
                     <Grid is_flex width="auto">
-                        <a href="/" style={{color:"#F0EDCC", textDecoration:"none"}}>우체국</a>
+                        <a href="/" style={{color:"#F0EDCC", textDecoration:"none"}}>나의 우체국<BsMailbox style={{
+                            marginLeft:"5px",
+                            fontSize:"20px",
+                            verticalAlign:"sub"
+                        }}/></a>
                         {/* <Button width="80px" text="홈"></Button> */}
                     </Grid>
                     <Grid is_flex width="auto">
-                        <Button text="로그아웃" width="80px"></Button>
+                        <Button 
+                            bg="transparent"
+                            color="#FFD662"
+                            size="22px"
+                            padding="0"
+                            width="auto"
+                        ><BiLogOut/></Button>
                     </Grid>
-                </Grid>           
+                </HeaderGrid>           
             </React.Fragment>
         );
     }
     return(
         <React.Fragment>
-            <Grid is_flex padding="8px 16px">
+            <HeaderGrid>
                 <Grid is_flex width="auto">
-                    <a href="/" style={{color:"#F0EDCC", textDecoration:"none"}}>우체국</a>
+                    <a href="/" style={{color:"#F0EDCC", textDecoration:"none"}}>나의 우체국<BsMailbox style={{
+                        marginLeft:"5px",
+                        fontSize:"20px",
+                        verticalAlign:"sub"
+                    }}/></a>
                     {/* <Button width="80px" text="우체국" color="#F0EDCC" _onClick={()=>{
                         history.push("/");
                     }}></Button> */}
                 </Grid>
                 <Grid is_flex width="auto">
-                    <Button text="로그인" width="80px" margin="0 10px 0 0" 
+                    <Button 
+                        margin="5px 10px 0 0" 
+                        bg="transparent"
+                        color="#FFD662"
+                        size="22px"
+                        padding="0"
+                        width="auto"
                         _onClick={()=>{
                             history.push("/login");
                         }}
-                    ></Button>
-                    <Button width="80px" text="회원가입"
+                    ><BiLogIn/></Button>
+                    <Button 
+                        margin="5px 0 0"
+                        bg="transparent"
+                        color="#FFD662"
+                        size="22px"
+                        padding="0"
+                        width="auto"
                         _onClick={()=>{
                             history.push("/signup");
                         }}
-                    ></Button>
+                    ><FaUserPlus/></Button>
                 </Grid>
-            </Grid>
+            </HeaderGrid>            
         </React.Fragment>
     );
 };
@@ -56,5 +86,17 @@ const Header = (props) => {
 Header.defaultProps = {
    
 };
+
+const HeaderGrid = styled.div`
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px;
+    border-bottom: 5px solid #093e49;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+`;
 
 export default Header;

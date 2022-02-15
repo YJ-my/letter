@@ -38,7 +38,7 @@ Button.defaultProps = {
     width: "100%",
     height: '',
     color: "black",
-    bg: "#000",
+    bg: "#FFD662",
     padding: "12px 0px",
     border:"none",
     size:"",
@@ -59,7 +59,6 @@ const DefaultButton = styled.button`
     cursor: pointer;
     z-index: 2;
     ${(props) => (props.size? `font-size: ${props.size};` : '')};
-    background-color: #FFD662;
 `;
 
 

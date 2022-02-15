@@ -1,15 +1,15 @@
 import React from "react";
 import {Grid, Button, Text, Fixed} from "../elements/index";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const PostDetail = (props) => {
+    const params_id = props.match.params.postId;
     const postList = useSelector((state) => state.post.list);
-    //console.log(postList);
-
-    const params_id = props.match.params.id;
-
-    const post_idx = postList.findIndex((p) => p.post_id === params_id);
+    const post_idx = postList.findIndex((p) => p.postId === params_id);
     const post = postList[post_idx];
+
+    // console.log(params);
 
     React.useEffect(() => {
         if(post){
@@ -18,8 +18,7 @@ const PostDetail = (props) => {
     }, []);
     
     return(
-        <React.Fragment>
-            
+        <React.Fragment>            
             <Grid >
                 <Grid is_scroll >               
                     <Grid  min_height="85vh" display="inline-block" bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
@@ -30,9 +29,9 @@ const PostDetail = (props) => {
                         <Grid>
                             <Text>{props.content}</Text>
                         </Grid>
-                        <Fixed bottom="10px">
-                            <Button width="calc(50% - 10px)" margin="0 10px 0 0">수정</Button>
-                            <Button width="calc(50% - 10px)">삭제</Button>
+                        <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
+                            <Button width="calc(50% - 5px)" margin="0 10px 0 0">수정</Button>
+                            <Button width="calc(50% - 5px)">삭제</Button>
                         </Fixed>
                     </Grid>
 
@@ -67,7 +66,15 @@ const PostDetail = (props) => {
 
 };
 
-
+PostDetail.defaultProps = {
+    postId: 2,
+    nickname : "편지왕",
+    content: "편지왕은 나야나",
+    anonymous: false,
+    modifiedAt: "2022-02-15",
+    replyCount : 1,
+    uid : "002"
+}
 
 
 export default PostDetail;
