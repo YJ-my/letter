@@ -13,6 +13,7 @@ const PostWrite = (props) => {
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
     const date = moment().format("YYYY-MM-DD");
 
+
     const changeContents =  (e) => {
         setContents(e.target.value);
     };
@@ -25,9 +26,17 @@ const PostWrite = (props) => {
         dispatch(PostActions.addPostDB(contents,anonymous));
     };
 
+    const editPost = () => {
+        dispatch(PostActions.editPostDB(contents,anonymous));
+    };
+
+    let post_id = props.match.params.postId;
+    // console.log(post_id);
+    const is_edit = post_id ? true : false;
+
     return(
         <React.Fragment>
-            <Text margin="0px" size="36px" bold color="white">편지쓰기</Text><br></br>
+            <Text margin="0px" size="36px" bold color="white">{is_edit ? ("편지 다시쓰기") : ("편지쓰기")}</Text><br></br>
             <Grid bg="#eee" padding="20px" radius="10px">
                 <Grid>               
                     <Grid min_height="70vh">
@@ -47,11 +56,15 @@ const PostWrite = (props) => {
                         </Grid>
                     </Grid> 
                 </Grid>
-                <Button is_fixed 
+                {is_edit ? (<Button is_fixed 
+                    _onClick={()=>{
+                        editPost();
+                    }}>수정하기
+                </Button>) : (<Button is_fixed 
                     _onClick={()=>{
                         addPost();
                     }}>작성하기
-                </Button>
+                </Button>)}
             </Grid>
 
         </React.Fragment>

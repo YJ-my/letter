@@ -51,7 +51,10 @@ export const postApis = {
     ,
     //게시글 수정하기
     editPost:(postId, content, anonymous) => 
-        apis.post(`/api/posts/${postId}`)
+        apis.post(`/api/posts/${postId}`, {
+            content:content,
+            anonymous:anonymous,
+        })
     ,
     //게시글 삭제
     deletePost: (postId) => 

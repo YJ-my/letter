@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {actionCreators as postActions} from "../redux/modules/post";
 import Reply from "../components/Reply";
 import { FiSend } from "react-icons/fi";
+import { history } from "../redux/configureStore";
 
 
 const PostDetail = (props) => {
@@ -22,6 +23,10 @@ const PostDetail = (props) => {
         dispatch(postActions.getOnePostDB(params_id));
     });
 
+    const editOnePost = () => {
+        history.push(`/write/${params_id}`)
+    }
+
     return(
         <React.Fragment>   
             {post && (       
@@ -35,11 +40,11 @@ const PostDetail = (props) => {
                             <Grid>
                                 <Text>{post.content}</Text>
                             </Grid>                    
-                            {/* <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
-                                <Button width="calc(50% - 5px)" margin="0 10px 0 0">수정</Button>
+                            <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
+                                <Button width="calc(50% - 5px)" margin="0 10px 0 0" _onClick={editOnePost}>수정</Button>
                                 <Button width="calc(50% - 5px)">삭제</Button>
-                            </Fixed>*/}
-                            <Button reply><FiSend/></Button>
+                            </Fixed>
+                            {/* <Button reply><FiSend/></Button> */}
                         </Grid>
                         {/* 답장 영역 */}
                             <Grid display="inline-block">                        
