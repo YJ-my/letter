@@ -12,9 +12,7 @@ import { FaUserPlus } from "react-icons/fa";
 const Header = (props) => {
     const dispatch = useDispatch();
     const is_login = useSelector((state) => state.user.is_login);
-    const user_info = useSelector((state) => state.user.user);
-
-    console.log(user_info,is_login);
+    const user_info = useSelector((state) => state.user.user);    
     
     const logout = () => {
         dispatch(userActions.loginOutAction());

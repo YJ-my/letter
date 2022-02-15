@@ -7,7 +7,7 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 
 const Card = (props) => {
     const dispatch = useDispatch(); 
-
+    
     return(
         <React.Fragment>
             <Grid>

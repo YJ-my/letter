@@ -3,6 +3,7 @@ import { history } from "../redux/configureStore";
 import {Grid, Button, Text} from "../elements/index";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../components/Card";
+import Permit from "../shared/Permit";
 import { actionCreators as PostActions } from "../redux/modules/post";
 import { BiMailSend } from "react-icons/bi";
 
@@ -10,10 +11,7 @@ const Main = (props) => {
     const dispatch = useDispatch();     
     const postList = useSelector((state) => state.post.list);
 
-    // React.useEffect(()=>{        
-    //     dispatch(PostActions.getPostDB());//처음 렌더링될 때 포스트리스트 갱신하기
-    // });
-
+    console.log("main",postList);
     return(
         <React.Fragment>
             {postList.map((p, idx) => {
@@ -32,13 +30,15 @@ const Main = (props) => {
                     
                 );
             })}
-            <Grid padding="20px">
-                <Button is_fixed
-                    _onClick={()=>{
-                        history.push("/write");
-                    }}
-                >편지 부치기<BiMailSend style={{fontSize: "20px",verticalAlign: "sub"}}/></Button>
-            </Grid>            
+            <Permit>            
+                <Grid padding="20px">
+                    <Button is_fixed
+                        _onClick={()=>{
+                            history.push("/write");
+                        }}
+                    >편지 부치기<BiMailSend style={{fontSize: "20px",verticalAlign: "sub"}}/></Button>
+                </Grid>   
+            </Permit>         
         </React.Fragment>
     );
 }

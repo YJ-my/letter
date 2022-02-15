@@ -34,15 +34,35 @@ export const userApis = {
   
 }
 
-// export const postApis = {
-//     getPost: () => 
-//         apis.get(`/api/mains`)
-//     ,
-
-//     addPost: (content, anonymous, uid) => 
-//         apis.post("/api/posts", content, anonymous, uid)
-//     ,
-// }
+export const postApis = {
+    //게시글 불러오기
+    getPost: () => 
+        apis.get("/api/mains")
+    ,
+    //게시글 작성하기
+    addPost: (content, anonymous) => 
+        apis.post("/api/posts", {
+            content:content,
+            anonymous:anonymous,
+        })
+    ,
+    //게시글 수정하기
+    editPost:(postId, content, anonymous) => 
+        apis.post(`/api/posts/${postId}`)
+    ,
+    //게시글 삭제
+    deletePost: (postId) => 
+        apis.delete(`/api/posts/${postId}`)
+    ,
+    //답장작성
+    replyPost: (postId, comment, anonymous) => 
+        apis.post(`/api/reply/${postId}`)
+    ,
+    //답장삭제
+    replyDelete: (postId) => 
+        apis.delete(`/api/reply/${postId}`)
+    ,
+}
 
 
 export default apis;

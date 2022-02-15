@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/configureStore";
 import {Grid} from '../elements/index';
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as postActions } from "../redux/modules/post";
 import { getCookie } from "./cookie";
 import '../shared/App.css';
 
@@ -23,6 +24,8 @@ function App() {
   const token = getCookie("authorization");
 
   React.useEffect(() => { //쿠키 있는 지 확인하기
+    dispatch(postActions.getPostDB());
+    
     if (token && !user) {
       dispatch(userActions.loginCheckDB());
     }
