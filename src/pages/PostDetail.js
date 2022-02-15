@@ -42,7 +42,7 @@ const PostDetail = (props) => {
                                 <Text>{post.content}</Text>
                             </Grid>
 
-                            {user_info?.nickname === userInfo.nickname ? (
+                            {user_info?.nickname === userInfo?.nickname ? (
                                 <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
                                     <Button width="calc(50% - 5px)" margin="0 10px 0 0">수정</Button>
                                     <Button width="calc(50% - 5px)">삭제</Button>
