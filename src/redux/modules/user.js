@@ -5,12 +5,10 @@ import axios from "axios";
 import { userApis } from "../../shared/apis";
 import {setCookie, getCookie, deleteCookie} from "../../shared/cookie";
 
-//깃 반영 테스트입니다.
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
 const SET_USER = "SET_USER";
-// const SIGN_UP = "SIGN_UP";
 
 
 const userlogIn = createAction(LOGIN, (user)=>({user}));
@@ -94,6 +92,7 @@ const loginAction = (username, password) => {
                 console.log(res);              
                 dispatch(setUser({
                     username:res.username,
+                    nickname:res.nickname,
                     token: token,
                 }));
             }).catch((error) => console.log("유저정보오류!",error))
@@ -122,6 +121,7 @@ const loginCheckDB = () => {
             dispatch(
               setUser({ //유저정보를 다시 세팅
                 username:res.username,
+                nickname:res.nickname,
                 token: token,
               })
             );

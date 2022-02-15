@@ -18,13 +18,18 @@ const Main = (props) => {
         <React.Fragment>
             {postList.map((p, idx) => {
                 return(
-                    <Card 
-                        {...p}
-                        key={idx}
-                        _onClick={()=>{
-                            history.push(`/post/${p.postId}`);
-                        }}
-                    />
+                    <Grid  
+                    key={idx}
+                    _onClick={()=>{
+                        history.push(`/post/${p.postId}`)
+                    }}>
+                        <Card 
+                            {...p}
+                            key={idx}
+                                            
+                        />
+                    </Grid>
+                    
                 );
             })}
             <Grid padding="20px">
