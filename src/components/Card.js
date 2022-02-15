@@ -6,8 +6,7 @@ import { actionCreators as postActions } from '../redux/modules/post';
 import { FaAngleDoubleRight } from "react-icons/fa";
 
 const Card = (props) => {
-    const dispatch = useDispatch(); 
-    
+    const dispatch = useDispatch();
     return(
         <React.Fragment>
             <Grid>

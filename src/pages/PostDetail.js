@@ -1,27 +1,33 @@
 import React from "react";
 import styled from "styled-components";
+import { history } from "../redux/configureStore";
 import {Grid, Button, Text, Fixed} from "../elements/index";
 import { useSelector, useDispatch } from "react-redux";
 import {actionCreators as postActions} from "../redux/modules/post";
 import Reply from "../components/Reply";
 import { FiSend } from "react-icons/fi";
-import { history } from "../redux/configureStore";
+
 
 
 const PostDetail = (props) => {
     const dispatch = useDispatch();
+    const {userInfo} = props;
+
     const params_id = props.match.params.postId;
+    const user_info = useSelector((state) => state.user.user);
     const postList = useSelector((state) => state.post.list);
-    const post_idx = postList.findIndex(p => p.postId === parseInt(params_id));
+    const post_idx = postList.findIndex(p => p.postId === parseInt(params_id));    
     const post = postList[post_idx];
 
+    console.log(userInfo);
+    
 
     React.useEffect(() => {
         if(post){
            return; 
         }
         dispatch(postActions.getOnePostDB(params_id));
-    });
+    });  
 
     const editOnePost = () => {
         history.push(`/write/${params_id}`)
@@ -47,8 +53,8 @@ const PostDetail = (props) => {
                             {/* <Button reply><FiSend/></Button> */}
                         </Grid>
                         {/* 답장 영역 */}
-                            <Grid display="inline-block">                        
-                                <Reply></Reply>                    
+                            <Grid display="inline-block">
+                                <Reply></Reply>
                             </Grid>
                         {/* 답장영역 끝 */}
                     </Grid>                

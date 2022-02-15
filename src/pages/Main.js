@@ -10,24 +10,25 @@ import { BiMailSend } from "react-icons/bi";
 const Main = (props) => {
     const dispatch = useDispatch();     
     const postList = useSelector((state) => state.post.list);
+    const userInfo = useSelector((state) => state.user.user);
 
-    //console.log("main",postList);
     return(
         <React.Fragment>
-            {postList.map((p, idx) => {
+            {postList.map((p, idx) => {                
                 return(
                     <Grid  
                     key={idx}
                     _onClick={()=>{
                         history.push(`/post/${p.postId}`)
-                    }}>
+                    }}
+                    >
                         <Card 
                             {...p}
                             key={idx}
-                                            
+                            
                         />
                     </Grid>                    
-                );
+                );                
             })}
             <Permit>            
                 <Grid padding="20px">

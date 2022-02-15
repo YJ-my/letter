@@ -13,8 +13,7 @@ const Reply = () => {
                 <Text>어쩌구 저쩌구 답장입니다.</Text>
             </Grid>
             <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
-                <Button width="calc(50% - 5px)" margin="0 10px 0 0">수정</Button>
-                <Button width="calc(50% - 5px)">삭제</Button>
+                <Button>답장 지우기</Button>
             </Fixed>
         </Grid>  
     );
