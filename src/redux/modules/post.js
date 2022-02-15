@@ -48,10 +48,8 @@ const getPostDB = () => {
                 };
 
                 post_list.push(post);
-            });
-            
+            });            
             dispatch(getPost(post_list));
-            //console.log("포스트리스트",post_list);
         });     
     }
 }

@@ -5,11 +5,13 @@ import { connectRouter } from "connected-react-router";
 
 import User from "./modules/user"; //user의 리듀서
 import Post from "./modules/post"; //post의 리듀서
+import Reply from "./modules/reply"; //reply의 리듀서
 
 export const history = createBrowserHistory();
 const rootReducer = combineReducers({ //우리가 만든 리듀서 뭉치기
     user: User,
     post: Post,
+    reply: Reply,
     router: connectRouter(history),
 });
 

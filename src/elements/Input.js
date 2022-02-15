@@ -69,6 +69,8 @@ const ElTextarea = styled.textarea`
   padding: 12px 4px;
   box-sizing: border-box;
   background-color:#eee;
+  border-radius: 10px;
+  outline: none;
 `;
 
 const ElInput = styled.input`
@@ -80,7 +82,8 @@ const ElInput = styled.input`
     box-sizing: border-box;
     border-radius: ${(props) => props.radius};
     background-color: inherit;
-    color:#ffffff
+    color:#ffffff;
+    outline: none;
     
 `;
 

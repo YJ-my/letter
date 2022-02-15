@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {Grid, Button, Text, Input} from "../elements/index";
+import { BiMailSend } from "react-icons/bi";
 
 const ReplyWrite = (props) => {
     const [contents, setContents] = React.useState('');
@@ -11,23 +12,16 @@ const ReplyWrite = (props) => {
     return(
         <React.Fragment>
             <Grid>
-
                 <HarfDiv>                
-                    <Text size="25px">답장할 편지📮</Text>
-                    <Grid bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px">
-                        <Text overflow="scroll">
-                            안녕하세요 편지 내용입니다.
-                            안녕하세요 편지 내용입니다.안녕하세                        안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.
-    요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입                        안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.
-    안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.
-    니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.안녕하세요 편지 내용입니다.
-                        </Text>
+                    <Text size="25px" color="white">답장할 편지📮</Text>
+                    <Grid bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px">
+                        <Text overflow="scroll"></Text>
                     </Grid>
                 </HarfDiv>
 
 
                 <HarfDiv style={{verticalAlign:"top"}}>
-                    <Text size="25px">답장💌</Text>
+                    <Text size="25px" color="white">답장💌</Text>
                     <Grid>
                         <Input 
                             value={contents} 
@@ -35,7 +29,7 @@ const ReplyWrite = (props) => {
                             placeholder="답장을 작성해주세요 :-)" 
                             multiLine 
                         />
-                        <label>
+                        <label style={{color:"white"}}>
                             <input type="checkbox"/>
                             익명으로 쓸래요
                         </label>                   
@@ -43,7 +37,7 @@ const ReplyWrite = (props) => {
                 </HarfDiv>
 
                 <Grid padding="20px">
-                    <Button is_fixed>답장 쓰기</Button>
+                    <Button is_fixed>답장 부치기<BiMailSend style={{fontSize: "20px",verticalAlign: "sub"}}/></Button>
                 </Grid>
 
             </Grid>
