@@ -8,11 +8,15 @@
 body {
   margin: 0;
   font-family: 'OTWelcomeRA' , sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: 'OTWelcomeRA' , sans-serif;
+  -moz-osx-font-smoothing: 'OTWelcomeRA' , sans-serif;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+button {
+  font-family: 'OTWelcomeRA' , sans-serif;  
 }

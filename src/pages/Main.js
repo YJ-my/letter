@@ -10,21 +10,26 @@ const Main = (props) => {
     const dispatch = useDispatch();     
     const postList = useSelector((state) => state.post.list);
 
-    React.useEffect(()=>{        
-        dispatch(PostActions.getPostDB());//처음 렌더링될 때 포스트리스트 갱신하기
-    });
+    // React.useEffect(()=>{        
+    //     dispatch(PostActions.getPostDB());//처음 렌더링될 때 포스트리스트 갱신하기
+    // });
 
     return(
         <React.Fragment>
             {postList.map((p, idx) => {
                 return(
-                    <Card 
-                        {...p}
-                        key={idx}
-                        _onClick={()=>{
-                            history.push(`/post/${p.postId}`);
-                        }}
-                    />
+                    <Grid  
+                    key={idx}
+                    _onClick={()=>{
+                        history.push(`/post/${p.postId}`)
+                    }}>
+                        <Card 
+                            {...p}
+                            key={idx}
+                                            
+                        />
+                    </Grid>
+                    
                 );
             })}
             <Grid padding="20px">
