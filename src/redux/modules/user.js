@@ -80,7 +80,7 @@ const loginCheckDB = () => {
     userApis
         .getUser()
         .then((res) => {
-            console.log("loginCheckDB",res.data);
+            //console.log("loginCheckDB",res.data);
             dispatch(
                 setUser({ //유저정보를 다시 세팅
                     username:res.data.username,

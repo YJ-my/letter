@@ -18,24 +18,7 @@ const deletePost = createAction(DELETE_POST, (post) => ({post}));
 
 
 const initialState = {
-    list: [
-        {
-            postId: 1,
-            nickname : "하이루",
-            content: "편지를 써볼게여",
-            anonymous: true,
-            modifiedAt: "2022-02-15",
-            replyCount : 3,
-        },
-        {   
-            postId: 2,
-            nickname : "편지왕",
-            content: "편지왕은 나야나",
-            anonymous: false,
-            modifiedAt: "2022-02-15",
-            replyCount : 1,
-        },
-    ]
+    list: [],
 };
 
 
@@ -51,7 +34,7 @@ const getPostDB = () => {
     return function (dispatch, getState, {history}) {
         postApis.getPost()
             .then((res)=>{            
-            console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
+            //console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
             let post_list = [];
             
             res.data.forEach((_post)=>{
@@ -68,10 +51,37 @@ const getPostDB = () => {
             });
             
             dispatch(getPost(post_list));
-            console.log("포스트리스트",post_list);
+            //console.log("포스트리스트",post_list);
         });     
     }
 }
+
+//게시글 1개만 가져오기
+const getOnePostDB = (postId) => {
+    return async function (dispatch, getState, { history }) {
+
+        postApis.getOnePost(postId)
+        .then((res) => {
+            console.log(res.data);
+
+            const _post = res.data;
+            const post = {
+                postId : _post.postId,
+                content: _post.content,
+                modifiedAt: _post.localDateTime,
+                nickname: _post.nickName,
+                replyCount: _post.replyCount,
+                anonymous:_post.anonymous,
+            };
+            //dispatch(getPost([post]));
+        })
+        .catch((err) => {
+          console.log("게시물 1개 가져오기 실패 : ", err.response);
+          history.replace("/");
+        });
+    };
+  };
+
 
 //게시글 작성
 const addPostDB = (content,anonymous) => {
@@ -81,9 +91,9 @@ const addPostDB = (content,anonymous) => {
         console.log("편지 작성중",content, anonymous, _user.nickname);
 
         postApis.addPost(content,anonymous).then((respones)=>{
+            //const user = getState().user.user;
             console.log("포스트 성공 데이터",respones.data);
             window.alert("편지 전달 성공 :)");
-
             history.push("/");
         }).catch((error)=>{
             window.alert("편지 발송에 실패했습니다 :(");
@@ -163,6 +173,7 @@ export default handleActions ({
 
 const actionCreators = { //액션 생성자 내보내기
     getPostDB,
+    getOnePostDB,
     addPostDB,
     deletePostDB,
     editPostDB

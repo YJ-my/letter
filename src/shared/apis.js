@@ -39,6 +39,10 @@ export const postApis = {
     getPost: () => 
         apis.get("/api/mains")
     ,
+    //게시글 1개 불러오기
+    getOnePost: (postId) => 
+        apis.get(`/api/posts/${postId}`)
+    ,
     //게시글 작성하기
     addPost: (content, anonymous) => 
         apis.post("/api/posts", {

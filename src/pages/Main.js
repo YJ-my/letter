@@ -11,7 +11,7 @@ const Main = (props) => {
     const dispatch = useDispatch();     
     const postList = useSelector((state) => state.post.list);
 
-    console.log("main",postList);
+    //console.log("main",postList);
     return(
         <React.Fragment>
             {postList.map((p, idx) => {
@@ -26,8 +26,7 @@ const Main = (props) => {
                             key={idx}
                                             
                         />
-                    </Grid>
-                    
+                    </Grid>                    
                 );
             })}
             <Permit>            

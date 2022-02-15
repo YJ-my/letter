@@ -13,8 +13,6 @@ const PostWrite = (props) => {
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
     const date = moment().format("YYYY-MM-DD");
 
-
-
     const changeContents =  (e) => {
         setContents(e.target.value);
     };
