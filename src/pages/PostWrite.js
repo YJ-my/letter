@@ -12,7 +12,7 @@ const PostWrite = (props) => {
     const [contents, setContents] = React.useState("");
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
     const date = moment().format("YYYY-MM-DD");
-
+    let post_id = props.match.params.postId;
 
     const changeContents =  (e) => {
         setContents(e.target.value);
@@ -27,10 +27,9 @@ const PostWrite = (props) => {
     };
 
     const editPost = () => {
-        dispatch(PostActions.editPostDB(contents,anonymous));
+        dispatch(PostActions.editPostDB(post_id,contents,anonymous));
     };
 
-    let post_id = props.match.params.postId;
     // console.log(post_id);
     const is_edit = post_id ? true : false;
 
@@ -48,7 +47,7 @@ const PostWrite = (props) => {
                         <Grid>
                             <Input
                                 value={contents}
-                                _onChange={changeContents}
+                                // _onChange={changeContents}
                                 // label="게시글 내용"
                                 placeholder="편지 내용을 입력해주세요 :)"
                                 multiLine

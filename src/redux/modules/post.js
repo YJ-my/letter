@@ -113,7 +113,7 @@ const editPostDB = (postId=null, content, anonymous) => {
             username: _user.username, //유저 아이디
         };
 
-        const _post_idx = getState().post.list.findIndex((p) => p.id === postId);
+        const _post_idx = getState().post.list.findIndex((p) => p.postId === postId);
         const _post = getState().post.list[_post_idx];
 
         const post = {
