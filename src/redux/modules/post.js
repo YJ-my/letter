@@ -105,6 +105,7 @@ const addPostDB = (content,anonymous) => {
 
 const editPostDB = (postId=null, content, anonymous) => {
     return function (dispatch, getState, {history}) {
+       
         const _user = getState().user.user;
         const user_info = {
             nickname: _user.nickname,  // 유저 닉네임
@@ -119,10 +120,7 @@ const editPostDB = (postId=null, content, anonymous) => {
             content:content,
             anonymous:anonymous,
         };
-
-        console.log(content, anonymous, user_info.nickname);
-
-        postApis.editPost(post).then((res)=>{
+        postApis.editPost(postId, content, anonymous).then((res)=>{
             console.log(res.data); //result 값
             dispatch(editPost(postId,{...post}));
         }).catch((error)=>{
@@ -159,7 +157,7 @@ export default handleActions ({
         console.log(draft.list);
     }),
     [EDIT_POST]: (state, action) => produce(state, (draft) => {
-        let idx = draft.list.findIndex((p) => p.id === action.payload.postId);
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
