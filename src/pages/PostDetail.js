@@ -22,7 +22,7 @@ const PostDetail = (props) => {
             
             <Grid >
                 <Grid is_scroll >               
-                    <Grid  min_height="85vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
+                    <Grid  min_height="85vh" display="inline-block" bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
                         <Grid is_flex>
                             <Text>{props.modifiedAt}</Text>
                             <Text bold>{props.nickname}</Text>

@@ -6,7 +6,8 @@ import { actionCreators as postActions } from '../redux/modules/post';
 
 
 const Card = (props) => {
-    const dispatch = useDispatch();    
+    const dispatch = useDispatch(); 
+    //const post_id = props.match.params.id;   
     return(
         <React.Fragment>
             <Grid>             
@@ -16,9 +17,10 @@ const Card = (props) => {
                         <hr/>
                     </Grid>
                     <Grid>
-                        <Text><b>{props.nickname}</b>님으로부터</Text>
+                        <Text size="16px"><b>{props.nickname}</b>님으로부터</Text>
                         <Text margin="10px 0 0 0">{props.content}</Text>
                     </Grid>
+                    <Text align="right">더 읽어보기</Text>
                 </Grid>
             </Grid>
         </React.Fragment>

@@ -16,7 +16,27 @@ const deletePost = createAction(DELETE_POST, (post) => ({post}));
 
 
 const initialState = {
-    list: []
+    list: [
+        {   
+            postId: 1,
+            nickname : "하이루",
+            content: "편지를 써볼게여",
+            anonymous: true,
+            modifiedAt: "2022-02-15",
+            replyCount : 3,
+            uid : "001"
+        },
+        {   
+            postId: 2,
+            nickname : "편지왕",
+            content: "편지왕은 나야나",
+            anonymous: false,
+            modifiedAt: "2022-02-15",
+            replyCount : 1,
+            uid : "002"
+        },
+
+    ]
 };
 
 
@@ -86,8 +106,6 @@ const addPostDB = (content, anonymous, uid ) => {
         // });
     };
 };
-
-
 
 
 

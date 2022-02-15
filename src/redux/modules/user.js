@@ -3,8 +3,6 @@ import { produce } from "immer";
 
 import axios from "axios";
 import { userApis } from "../../shared/apis";
-import {setAuthorizationToken} from "../../shared/setAuthorizationToken";
-import { setToken, delToken } from "../../shared/token";
 import {setCookie, getCookie, deleteCookie} from "../../shared/cookie";
 
 //깃 반영 테스트입니다.
@@ -15,14 +13,14 @@ const SET_USER = "SET_USER";
 // const SIGN_UP = "SIGN_UP";
 
 
-const logIn = createAction(LOGIN, (user)=>({user}));
-const logOut = createAction(LOGOUT, (user) => ({user}));
+const userlogIn = createAction(LOGIN, (user)=>({user}));
+const userlogOut = createAction(LOGOUT, (user) => ({user}));
 const setUser = createAction(SET_USER, (username, is_login) => ({username, is_login}));
 // const signUp = createAction(SIGN_UP, (user) => ({user}));
 
 
 const initialState = {   
-    username: null,
+    username: "",
     is_login : false,
 };
 
@@ -31,11 +29,6 @@ const initialState = {
 export const signupAction = (username, nickname, password) => {
     return function(dispatch, getState, {history}) {
         //console.log(username, password, nickname);
-        
-        // const params = new URLSearchParams();
-        // params.append('username', username);
-        // params.append('nickname', nickname);   
-        // params.append('password', password); 
 
         userApis.signup(username, nickname, password)
         .then((res) => {
@@ -56,36 +49,26 @@ const loginAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
 
-        const params = new URLSearchParams();
-        params.append('username', username);
-        params.append('password', password); 
+        const frm = new FormData();
+        frm.append("username", username);
+        frm.append("password", password);
 
-        userApis.login(params)
+        userApis.login(frm)
         .then((res) => {
             console.log(res.headers.authorization, "로그인토큰확인");
 
-            // const token = response.headers.authorization;
-            // console.log(typeof token);
-            // setToken(token);
-            // console.log("토큰저장완료!");
-            // window.alert("로그인 성공 🔥");
-
-            // console.log(response.headers.get("set-cookie"));
-            // const token = response.headers["authorization"];
-            // setCookie("is_login", `${token}`);
-            // setAuthorizationToken(token);
-            window.alert("로그인 성공 🔥");
+            const token = res.headers.authorization;
+            setCookie(token);
 
             const is_login = true;
             dispatch(
                 setUser({is_login,username})
             );
-            history.push("/");
+            history.replace("/");
             
         })
         .catch((error) => {
-            window.alert("로그인오류입니다!", error.response);
-            console.log("로그인오류입니다!", error.response);
+            console.log("로그인오류입니다!", error);
         })
     };
 };
@@ -118,7 +101,7 @@ const loginOutAction = () => {
         userApis.logout()
         .then((res) =>{
             console.log(res,"로그아웃");
-            dispatch(logOut());
+            dispatch(userlogOut());
             console.log("로그아웃 성공");
             window.location.reload();
         }).catch(function (error) {
@@ -138,7 +121,6 @@ export default handleActions ({
     [LOGOUT]: (state, action) => produce(state, (draft) => {
         draft.username = null;
         draft.is_login = false;
-        delToken();
     }),
     [SET_USER]: (state, action) => produce(state, (draft) => {
         //console.log(action.payload.username);

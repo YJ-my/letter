@@ -15,28 +15,14 @@ const Main = (props) => {
 
     return(
         <React.Fragment>
-            {/* {postList.map((p, idx) => {
+            {postList.map((p, idx) => {
                 return(
                     <Card 
                         {...p}
                         key={idx}
                     />
                 );
-            })} */}
-
-            <Grid>             
-                <Grid bg="#F0EDCC" padding="20px" margin="0 0 15px 0" radius="10px">
-                    <Grid>
-                        <Text margin="0 0 10px 0"><b>{props.replyCount}0</b>개의 답장</Text>
-                        <hr/>
-                    </Grid>
-                    <Grid>
-                        <Text size="16px"><b>{props.nickname}하이루</b>님으로부터</Text>
-                        <Text margin="10px 0 0 0">{props.content}라라라라라라라랄</Text>
-                    </Grid>
-                    <Text align="right">더 읽어보기</Text>
-                </Grid>
-            </Grid>
+            })}
             <Grid padding="20px">
                 <Button is_fixed
                     _onClick={()=>{
