@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 const Button = (props) => {
-    const {text, size, children, _onClick, margin, width, height, color, bg, padding , border, is_fixed} = props;
+    const {text, size, children, _onClick, margin, width, height, color, bg, padding , border, is_fixed, reply} = props;
     const styles = {
         margin: margin,
         width: width,
@@ -14,7 +14,16 @@ const Button = (props) => {
         border: border,
         size:size,
         is_fixed:is_fixed,
+        reply:reply,
     }
+   if(reply){
+        return(
+            <React.Fragment>
+                <ReplyButton {...styles} type="button" onClick={_onClick}>{text? text: children}</ReplyButton>
+            </React.Fragment>
+        ); 
+
+   }
     if(is_fixed){
         return(
             <React.Fragment>
@@ -61,7 +70,6 @@ const DefaultButton = styled.button`
     ${(props) => (props.size? `font-size: ${props.size};` : '')};
 `;
 
-
 const FixedButton = styled.button`
     width: 100%;
     height: 50px;
@@ -77,5 +85,23 @@ const FixedButton = styled.button`
     cursor: pointer;
     
 `;
+
+
+const ReplyButton = styled.button`
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background-color: #FFD662;
+    border: none;
+    color:#093e49;
+    cursor: pointer;
+    font-size: 22px;
+    padding-top: 9px;
+`;
+
+
 
 export default Button;

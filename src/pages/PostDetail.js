@@ -1,22 +1,27 @@
 import React from "react";
+import styled from "styled-components";
 import {Grid, Button, Text, Fixed} from "../elements/index";
 import { useSelector, useDispatch } from "react-redux";
 import {actionCreators as postActions} from "../redux/modules/post";
+import Reply from "../components/Reply";
+import { FiSend } from "react-icons/fi";
+
 
 const PostDetail = (props) => {
     const dispatch = useDispatch();
     const params_id = props.match.params.postId;
     const postList = useSelector((state) => state.post.list);
-    const post_idx = postList.findIndex((p) => p.postId === params_id);
+    const post_idx = postList.findIndex(p => p.postId === parseInt(params_id));
     const post = postList[post_idx];
-    
+
+
     React.useEffect(() => {
         if(post){
            return; 
         }
         dispatch(postActions.getOnePostDB(params_id));
     });
-    
+
     return(
         <React.Fragment>   
             {post && (       
@@ -24,47 +29,22 @@ const PostDetail = (props) => {
                     <Grid is_scroll >               
                         <Grid  min_height="85vh" display="inline-block" bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
                             <Grid is_flex>
-                                <Text>{props.modifiedAt}</Text>
-                                <Text bold>{props.nickname}</Text>
+                                <Text>{post.modifiedAt}</Text>
+                                <Text bold>{post.nickname}</Text>
                             </Grid>
                             <Grid>
-                                <Text>{props.content}</Text>
+                                <Text>{post.content}</Text>
                             </Grid>                    
-                            <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
+                            {/* <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
                                 <Button width="calc(50% - 5px)" margin="0 10px 0 0">수정</Button>
                                 <Button width="calc(50% - 5px)">삭제</Button>
-                            </Fixed>                        
+                            </Fixed>*/}
+                            <Button reply><FiSend/></Button>
                         </Grid>
-
                         {/* 답장 영역 */}
-                        <Grid display="inline-block">                        
-                            <Grid className="detail_card" min_height="85vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
-                                <Grid is_flex>
-                                    <Text>2022.02.11</Text>
-                                    <Text bold>닉네임</Text>
-                                </Grid>
-                                <Grid>
-                                    <Text>어쩌구 저쩌구 답장입니다.</Text>
-                                </Grid>
-                                <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
-                                    <Button width="calc(50% - 5px)" margin="0 10px 0 0">수정</Button>
-                                    <Button width="calc(50% - 5px)">삭제</Button>
-                                </Fixed>
-                            </Grid>  
-                            <Grid className="detail_card" min_height="85vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
-                                <Grid is_flex>
-                                    <Text>2022.02.11</Text>
-                                    <Text bold>닉네임</Text>
-                                </Grid>
-                                <Grid>
-                                    <Text>어쩌구 저쩌구 답장2입니다.</Text>
-                                </Grid>                            
-                                <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
-                                    <Button width="calc(50% - 5px)" margin="0 10px 0 0">수정</Button>
-                                    <Button width="calc(50% - 5px)">삭제</Button>
-                                </Fixed>                            
-                            </Grid>                     
-                        </Grid>
+                            <Grid display="inline-block">                        
+                                <Reply></Reply>                    
+                            </Grid>
                         {/* 답장영역 끝 */}
                     </Grid>                
                 </Grid>           
@@ -82,6 +62,7 @@ PostDetail.defaultProps = {
     modifiedAt: "2022-02-15",
     replyCount : 1,
 }
+
 
 
 export default PostDetail;

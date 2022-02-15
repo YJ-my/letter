@@ -73,7 +73,7 @@ const getOnePostDB = (postId) => {
                 replyCount: _post.replyCount,
                 anonymous:_post.anonymous,
             };
-            //dispatch(getPost([post]));
+            dispatch(getPost(post));
         })
         .catch((err) => {
           console.log("게시물 1개 가져오기 실패 : ", err.response);
