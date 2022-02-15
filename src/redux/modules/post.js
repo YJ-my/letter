@@ -35,7 +35,6 @@ const initialState = {
             replyCount : 1,
             // uid : "002"
         },
-
     ]
 };
 

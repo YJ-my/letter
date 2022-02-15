@@ -27,13 +27,12 @@ const PostWrite = (props) => {
         dispatch(PostActions.addPostDB(contents, nickname, anonymous));
     };
 
-
     return(
         <React.Fragment>
-            <Text margin="0px" size="36px" bold>편지쓰기</Text><br></br>
-            <Grid bg="#eee" padding="20px" radius="10px" min_height="80vh">
+            <Text margin="0px" size="36px" bold color="white">편지쓰기</Text><br></br>
+            <Grid bg="#eee" padding="20px" radius="10px">
                 <Grid>               
-                    <Grid min_height="80vh">
+                    <Grid min_height="70vh">
                         <Grid is_flex>
                             <Text>2022.02.11</Text>
                         </Grid>

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Text = (props) => {
-  const { bold, color, size, children, margin , inline_block, align, overflow} = props;
+  const { bold, color, size, children, margin , inline_block, align, overflow, ellipsis} = props;
 
   const styles = {
     bold: bold, 
@@ -12,7 +12,17 @@ const Text = (props) => {
     inline_block:inline_block,
     align:align,
     overflow:overflow,
+    ellipsis:ellipsis,
   };
+
+  if(ellipsis){
+    return (
+      <Ellipsis {...styles}>
+          {children}
+      </Ellipsis>
+    )
+
+  }
 
   if(overflow){
     return (
@@ -60,8 +70,19 @@ const ScrollP = styled.p`
   max-height: 300px;
   @media screen and (max-width: 540px) {
     max-height: 150px;
-  };
-  
+  };  
 `;
+
+const Ellipsis = styled.p`
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+`;
+
+
 
 export default Text;

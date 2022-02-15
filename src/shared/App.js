@@ -1,10 +1,13 @@
 import React from "react";
 import {Route} from "react-router-dom";
 import { ConnectedRouter } from 'connected-react-router';
+import { useDispatch } from "react-redux";
 import { history } from "../redux/configureStore";
 import {Grid} from '../elements/index';
-// import "./App.css";
+import { actionCreators as userActions } from "../redux/modules/user";
 import '../shared/App.css';
+
+//page import
 import Header from '../components/Header';
 import Main from '../pages/Main';
 import Login from '../pages/Login';
@@ -14,25 +17,26 @@ import ReplyWrite from '../pages/ReplyWrite';
 import PostDetail from '../pages/PostDetail';
 
 function App() {
+  const dispatch = useDispatch();
+  React.useEffect(() => { //쿠키 있는 지 확인하기
+    if (document.cookie) dispatch(userActions.loginCheckDB());
+  }, []);
+
   return (
-    <React.Fragment>
-      <Grid margin="0 auto">
-        <Header/>
-        <Grid padding="16px">          
-          <ConnectedRouter history={history}>  
-            <Route path="/" exact component={Main}/> {/* 메인페이지 */} 
-            <Route path="/login" exact component={Login}/>{/* 로그인페이지 */}
-            <Route path="/signup" exact component={Signup}/> {/* 회원가입 페이지 */}
-            <Route path="/write" exact component={PostWrite}/> {/* 글 작성 페이지 */}
-            <Route path="/write/:id" exact component={PostWrite}/>{/* 글 수정 페이지 */}
-            <Route path="/reply_write" exact component={ReplyWrite}/>{/* 답장작성페이지 */}
-            <Route path="/post/:id" exact component={PostDetail}/>{/*상세페이지+답장*/}
-            {/*<Route path="/post" exact component={PostDetail}/>상세페이지+답장*/}
-            
-          </ConnectedRouter>             
-        </Grid>
-      </Grid>
-      </React.Fragment>
+    <React.Fragment>      
+      <Header/>
+      <Grid padding="16px" margin="0 auto">          
+        <ConnectedRouter history={history}>  
+          <Route path="/" exact component={Main}/> 
+          <Route path="/login" exact component={Login}/>
+          <Route path="/signup" exact component={Signup}/>
+          <Route path="/write" exact component={PostWrite}/>
+          <Route path="/write/:postId" exact component={PostWrite}/>
+          <Route path="/reply_write" exact component={ReplyWrite}/>
+          <Route path="/post/:postId" exact component={PostDetail}/>      
+        </ConnectedRouter>
+      </Grid>      
+    </React.Fragment>
   );
 }
 
