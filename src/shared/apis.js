@@ -1,21 +1,16 @@
 import axios from "axios";
+import { getCookie } from "./cookie";
 
-const tokenCheck = document.cookie;
-const token = tokenCheck.split("=")[1];
 
 const apis = axios.create({
     baseURL:
         "http://15.164.251.132:8080", //*요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록*/
-    headers: {
-        "content-type": "application/json;charset=UTF-8",
-        accept: "application/json,",
-        token: token,
-    },
 });
 
 apis.interceptors.request.use(function (config) {
-    const accessToken = document.cookie.split("=")[1];
-    config.headers.common["authorization"] = `${accessToken}`;
+    const token = getCookie("token");
+    config.headers["Content-Type"] = "application/json;charset=UTF-8; charset=UTF-8";
+    config.headers.common["authorization"] = `${token}`;
     return config;
 });
 
@@ -35,10 +30,7 @@ export const userApis = {
         })
     ,
     //유저정보 백단에서 가져오기
-    userInfo: (token) =>
-        apis.post("/user/islogin", {
-        authorization: token,
-    }),
+    getUser: () => apis.get("/user/islogin"),
   
 }
 

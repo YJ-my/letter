@@ -2,7 +2,6 @@ const getCookie = (name) => { //유저의 쿠키확인용
   let value = document.cookie;
   let parts = value.split(`=`);
   parts.shift();
-  console.log(parts[0]);
   let result = parts[0];
   return result;
 

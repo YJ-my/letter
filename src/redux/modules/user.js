@@ -18,18 +18,18 @@ const setUser = createAction(SET_USER, (user) => ({user}));
 
 
 const initialState = {
-    userInfo : {
-        username: "",
-    },    
-    //is_login : false,
-    token: null,
+    user:null,
+    is_login : null,
 };
 
+const user_initial = {
+    username: "jini@naver.com",
+    nickname:"jini"
+};
 
 //회원가입 요청 post
 export const signupAction = (username, nickname, password) => {
     return function(dispatch, getState, {history}) {
-        //console.log(username, password, nickname);
 
         userApis.signup(username, nickname, password)
         .then((res) => {
@@ -45,56 +45,25 @@ export const signupAction = (username, nickname, password) => {
     };
 };
 
-
-//로그인 요청 post
-// const loginAction = (username, password) => {
-//     return function(dispatch, getState, {history}) {
-//         console.log(username, password);
-
-//         // const frm = new FormData();
-//         // frm.append("username", username);
-//         // frm.append("password", password);
-
-//         userApis.login(username, password)
-//         .then((res) => {
-//             console.log(res.headers.authorization, "로그인토큰확인");
-
-//             const token = res.headers.authorization;
-//             setCookie(token);           
-//             dispatch(setUser(username));
-//             history.replace("/");
-//         })
-//         .catch((error) => {
-//             console.log("로그인오류입니다!", error);
-//         })
-//     };
-// };
-
-
 //로그인 요청 post
 const loginAction = (username, password) => {
     return function(dispatch, getState, {history}) {
         console.log(username, password);
 
-        // const frm = new FormData();
-        // frm.append("username", username);
-        // frm.append("password", password);
-
         userApis.login(username, password)
         .then((res) => {
             console.log(res.headers, "로그인 토큰확인");
-
             setCookie("token", res.headers["authorization"], 1);
-            const token = res.headers["authorization"];                      
 
-            userApis.userInfo(res.headers["authorization"])
+            userApis.getUser()
             .then((res)=>{  
-                console.log(res);              
+                console.log("loginAction",res.data);
+
                 dispatch(setUser({
-                    username:res.username,
-                    nickname:res.nickname,
-                    token: token,
+                    username:res.data.username,
+                    nickname:res.data.nickname
                 }));
+                
             }).catch((error) => console.log("유저정보오류!",error))
             history.push("/");
         })
@@ -105,29 +74,21 @@ const loginAction = (username, password) => {
     };
 };
 
-
+//로그인 체크
 const loginCheckDB = () => {
     return function (dispatch, getState, { history }) {
-      const tokenCheck = document.cookie; //쿠키에 담겨있는 토큰 체크
-      console.log(tokenCheck);
-      const token = tokenCheck.split("=")[1];
-      console.log(token);
-
-      if (token) { //토큰이 있다면
-        userApis
-          .userInfo(token)
-          .then((res) => {
-            console.log(token);
+    userApis
+        .getUser()
+        .then((res) => {
+            console.log("loginCheckDB",res.data);
             dispatch(
-              setUser({ //유저정보를 다시 세팅
-                username:res.username,
-                nickname:res.nickname,
-                token: token,
-              })
+                setUser({ //유저정보를 다시 세팅
+                    username:res.data.username,
+                    nickname:res.data.nickname
+                })
             );
-          })
-          .catch((error) => console.log(error));
-      }      
+        })
+        .catch((error) => console.log(error));          
     };
   };
 
@@ -142,16 +103,14 @@ const loginOutAction = () => {
 
 
 
-
 export default handleActions ({
     [SET_USER]: (state, action) => produce(state, (draft) => {
-        //console.log(action.payload.username);
-        draft.username = action.payload.username;
-        draft.token = action.payload.user.token;
+        draft.user = action.payload.user;
+        draft.is_login = true;
     }),
     [LOGOUT]: (state, action) => produce(state, (draft) => {
-        draft.userInfo = null;
-        draft.token = false;
+        draft.user = null;
+        draft.is_login = false;
     }),
    
 },initialState);

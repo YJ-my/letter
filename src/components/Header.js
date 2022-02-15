@@ -9,22 +9,28 @@ import { BiLogIn } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { FaUserPlus } from "react-icons/fa";
 
-
-
 const Header = (props) => {
     const dispatch = useDispatch();
     const is_login = useSelector((state) => state.user.is_login);
-    const user_info = useSelector((state) => state.user.user);    
+    const user_info = useSelector((state) => state.user.user);
+
+    console.log(user_info,is_login);
+    
+    const logout = () => {
+        dispatch(userActions.loginOutAction());
+    };
+
 
     if(is_login){ //로그인이 됐다면
         return(
             <React.Fragment>
                 <HeaderGrid>
                     <Grid is_flex width="auto">
-                        <a href="/" style={{color:"#F0EDCC", textDecoration:"none"}}>나의 우체국<BsMailbox style={{
+                        <a href="/" style={{color:"#F0EDCC", textDecoration:"none"}}>{user_info.nickname}의 우체국<BsMailbox style={{
                             marginLeft:"5px",
                             fontSize:"20px",
-                            verticalAlign:"sub"
+                            verticalAlign:"sub",
+                            marginTop:"3px"
                         }}/></a>
                         {/* <Button width="80px" text="홈"></Button> */}
                     </Grid>
@@ -35,6 +41,8 @@ const Header = (props) => {
                             size="22px"
                             padding="0"
                             width="auto"
+                            margin="5px 0 0 0"
+                            _onClick={logout}
                         ><BiLogOut/></Button>
                     </Grid>
                 </HeaderGrid>           
