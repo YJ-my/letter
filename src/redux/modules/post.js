@@ -16,7 +16,7 @@ const DELETE_POST = "DELETE_POST";
 const getPost = createAction(GET_POST, (post_list)=>({post_list}));
 const setPost = createAction(SET_POST, (post)=>({post}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
-const editPost = createAction(EDIT_POST, (post) => ({post}));
+const editPost = createAction(EDIT_POST, (post, postId) => ({post, postId}));
 const deletePost = createAction(DELETE_POST, (post_list) => ({post_list}));
 
 
@@ -118,7 +118,7 @@ const editPostDB = (postId, post) => {
             postApis.getOnePost(postId)
             .then((res) => {
                 console.log("게시글 수정하기",res.data);
-                dispatch(editPost({post_index,...res.data,replyCount:post_index.replyCount}));
+                dispatch(editPost({...res.data,replyCount:post_index.replyCount},postId));
             })
             .catch((err) => {
                 console.log("편지 수정 게시글 가져오기 실패 : ", err.response);

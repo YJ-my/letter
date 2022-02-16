@@ -52,13 +52,12 @@ const deleteReplyDB = (postId, replyId) => {
         //     return r.replyId === replyId
         // });
 
-        // console.log(reply_index);
-
-        // dispatch(deleteReply(replyId));
+        // console.log(reply_index);        
 
         postApis.replyDelete(replyId)
         .then((res)=>{
             console.log(res);
+            //dispatch(deleteReply(replyId));
             window.alert("답장을 삭제했습니다.");
             history.replace("/");
         }).catch((err)=>{

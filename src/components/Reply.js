@@ -27,7 +27,7 @@ const Reply = (props) => {
             {props.username === user_info.username? (
                 <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
                     <Button _onClick={()=>{
-                        dispatch(replyAction.deleteReplyDB(props.commentId, parseInt(props.postId)));
+                        dispatch(replyAction.deleteReplyDB(parseInt(props.postId),props.commentId));
                     }}>답장 지우기</Button>
                 </Fixed>
             ) : ""}            
