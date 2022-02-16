@@ -34,10 +34,7 @@ const getPostDB = () => {
         postApis.getPost()
             .then((res)=>{            
             //console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
-            const data = res.data;
-            const replys = res.data.replys;
-
-            
+            const data = res.data;            
 
             // let post_list = [];
             // res.data.forEach((_post)=>{
@@ -52,7 +49,7 @@ const getPostDB = () => {
             //     };
 
             //     post_list.push(post);
-            // });                   
+            // });
             
             dispatch(getPost(data));
         });     
@@ -144,11 +141,12 @@ const deletePostDB = (postId) => {
         .then((res) => {
             console.log(res);
             dispatch(deletePost(postId));
-            history.replace("/");
+            history.push("/");
             window.alert("편지 삭제를 완료했습니다 :)");
         }).catch(err => {
             window.alert("편지 삭제를 실패했습니다 :(");
             console.log("편지삭제실패",err);
+            history.push("/");
         });
     };
 };
@@ -181,12 +179,17 @@ export default handleActions ({
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
-        draft.list = draft.list.filter((el) => {
-            if (el.postId === action.payload.postId) {
-              return false;
-            }
-            return true;
-        });
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
+        draft.list[idx] = draft.list.filter((p) => {
+            console.log(p.postId, action.payload.postId);
+            return p.postId !== action.payload.postId
+        })
+        // draft.list = draft.list.filter((el) => {
+        //     if (el.postId === action.payload.postId) {
+        //       return false;
+        //     }
+        //     return true;
+        // });
     }),
 
 },initialState);
