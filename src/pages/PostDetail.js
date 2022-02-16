@@ -6,6 +6,7 @@ import {actionCreators as postActions} from "../redux/modules/post";
 import Reply from "../components/Reply";
 import { FiSend } from "react-icons/fi";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import { getCookie } from "../shared/cookie";
 const PostDetail = (props) => {
     const dispatch = useDispatch();
 
@@ -15,17 +16,22 @@ const PostDetail = (props) => {
     const postList = useSelector((state) => state.post.list);    
     const post_idx = postList.findIndex((p) => p.postId === parseInt(params_id));    
     const post = postList[post_idx];
-    const replyList = post.replys;
-
+    
+    
     React.useEffect(() => {
-        if(!post){
+        if(!post){    
            return; 
-        }
-        if(is_login === null || is_login === false){
-            history.push("/");
-        }
+        }        
+
         dispatch(postActions.getOnePostDB(parseInt(params_id)));
     },[]);
+
+    if(post === undefined){
+        return (
+            <React.Fragment></React.Fragment>
+        );
+    };
+    const replyList = post.replys;    
 
     const editOnePost = () => {
         history.push(`/write/${params_id}`)
@@ -37,7 +43,7 @@ const PostDetail = (props) => {
 
     return(
         <React.Fragment>   
-            {post && (       
+            {post && (
                 <Grid >                    
                     <Grid is_scroll >               
                         <Grid  min_height="80vh" display="inline-block" bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative" align>
@@ -48,7 +54,7 @@ const PostDetail = (props) => {
                             <Grid>
                                 <Text>{post.content}</Text>
                             </Grid>    
-                            {post.username === user_info.username ? (
+                            {post.username?post.username === user_info.username ? (
                                 <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
                                     <Button width="calc(50% - 5px)" margin="0 10px 0 0" _onClick={editOnePost}>수정</Button>
                                     <Button width="calc(50% - 5px)" _onClick={deletePost}>삭제</Button>
@@ -59,7 +65,7 @@ const PostDetail = (props) => {
                                         history.push(`/reply_write/${params_id}`);
                                     }}
                                 ><FiSend/></Button>
-                            )}                            
+                            ) : ''}
                         </Grid>
                         {/* 답장 영역 */}  
                         {replyList.map((p, idx) => {                

@@ -17,7 +17,7 @@ const getPost = createAction(GET_POST, (post_list)=>({post_list}));
 const setPost = createAction(SET_POST, (post)=>({post}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
 const editPost = createAction(EDIT_POST, (post) => ({post}));
-const deletePost = createAction(DELETE_POST, (postId) => ({postId}));
+const deletePost = createAction(DELETE_POST, (post_list) => ({post_list}));
 
 
 
@@ -67,7 +67,7 @@ const getOnePostDB = (postId) => {
             //console.log("게시글 1개 콘솔",res.data.replys);
             const replys = res.data.replys;
 
-            //dispatch(setPost(res.data));
+            dispatch(setPost(res.data));
 
         })
         .catch((err) => {
@@ -86,22 +86,21 @@ const addPostDB = (content,anonymous) => {
         console.log("편지 작성중",content, anonymous, _user.nickname);
 
         postApis.addPost(content,anonymous).then((respones)=>{
-            const date = moment().format("YYYY-MM-DD");
-            const user = getState().user.user;
-            console.log("포스트 성공 데이터",respones.data);
+            const postId = respones.data;
 
-            dispatch(addPost({ 
-                content:content, 
-                anonymous:anonymous, 
-                postId: respones.data,
-                username: user.username, 
-                nickName:user.nickname,
-                localDateTime:date,
-                replyCount:0,
-            }));
+            postApis.getOnePostDB(postId)
+            .then((res) => {
+                console.log("게시글 새로작성",res.data);
+                dispatch(addPost({...res.data,replyCount:0}));
+            })
+            .catch((err) => {
+                console.log("게시물 작성 1개 가져오기 실패 : ", err.response);
+                history.replace("/");
+            });
 
             window.alert("편지 전달 성공 :)");
             history.replace("/");
+
         }).catch((error)=>{
             window.alert("편지 발송에 실패했습니다 :(");
             console.log("포스트 작성 에러",error);
@@ -114,15 +113,27 @@ const addPostDB = (content,anonymous) => {
 
 const editPostDB = (postId, post) => {
     return function (dispatch, getState, {history}) {
-
-        console.log(postId, post);
-
         postApis.editPost(postId,post).then((res)=>{
-            console.log(res.data); //result 값
-            dispatch(editPost(postId,{...post}));
+            const post_index = getState().post.list.find((item) => item.postId === postId);
 
+            console.log(post_index);
+
+            console.log("편지수정중",res);
+
+            postApis.getOnePostDB(postId)
+            .then((res) => {
+                console.log("게시글 수정하기",res.data);
+
+                dispatch(addPost({...res.data,replyCount:0}));
+            })
+            .catch((err) => {
+                console.log("게시물 작성 1개 가져오기 실패 : ", err.response);
+                history.replace("/");
+            });
+
+            //dispatch(editPost(postId,{...post}));
             window.alert("편지 수정 성공 :)");
-            history.replace("/");
+            //history.replace("/");
         }).catch((error)=>{
             console.log("게시글 작성 에러",error);
             window.alert("편지 수정을 실패했습니다 :(");
@@ -141,8 +152,14 @@ const deletePostDB = (postId) => {
         postApis.deletePost(postId)
         .then((res) => {
             console.log(res);
+            const post_index = getState().post.list.findIndex(
+                (item) => item.postId === postId
+              );
+            const _post = getState().post.list.filter((item, index) => {
+                return index !== post_index;
+            });            
 
-            dispatch(deletePost(postId));
+            dispatch(deletePost(_post));
             history.push("/");
             window.alert("편지 삭제를 완료했습니다 :)");
 
@@ -186,12 +203,9 @@ export default handleActions ({
         //     console.log(p.postId, action.payload.postId);
         //     return p.postId !== action.payload.postId
         // })
-        draft.list = draft.list.filter((el) => {
-            if (el.postId === action.payload.postId) {
-              return false;
-            }
-            return true;
-        });
+
+        draft.list = action.payload.post_list;
+        
     }),
 
 },initialState);
