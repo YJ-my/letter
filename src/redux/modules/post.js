@@ -27,14 +27,16 @@ const initialState = {
 };
 
 
+
 //게시글 조회
 const getPostDB = () => {
     return function (dispatch, getState, {history}) {
         postApis.getPost()
             .then((res)=>{            
-            //console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
-            const post_list = res.data;
-            dispatch(getPost(post_list));
+            console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
+            const data = res.data;
+            
+            dispatch(getPost(data));
         });     
     }
 }
@@ -44,12 +46,12 @@ const getOnePostDB = (postId) => {
     return async function (dispatch, getState, { history }) {
 
         postApis.getOnePost(postId)
-        .then((res) => {
+        .then((res) => {            
 
-            console.log("게시글 1개 콘솔",res.data);
-            console.log(postId);
-            const _post = res.data;
-            //dispatch(setPost(_post));
+            console.log("게시글 1개 콘솔",res.data.replys);
+            const replys = res.data.replys;
+
+            //dispatch(setPost(res.data));
 
         })
         .catch((err) => {
@@ -80,10 +82,10 @@ const addPostDB = (content,anonymous) => {
                 nickname:user.nickname,
                 localDateTime:date,
                 replyCount:0,
-            }))
+            }));
 
             window.alert("편지 전달 성공 :)");
-            history.push("/");
+            history.replace("/");
         }).catch((error)=>{
             window.alert("편지 발송에 실패했습니다 :(");
             console.log("포스트 작성 에러",error);
@@ -142,7 +144,16 @@ export default handleActions ({
         draft.list = action.payload.post_list;
     }),
     [SET_POST]: (state, action) => produce(state, (draft)=> {
-        let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
+        draft.list = draft.list.reduce((acc, cur) => {
+            // findIndex로 누산값(cur)에 현재값이 이미 들어있나 확인해요!
+            // 있으면? 덮어쓰고, 없으면? 넣어주기!
+            if (acc.findIndex((p) => p.postId === action.payload.postId) === -1){
+                return [...acc, cur];
+            }else{
+                acc[acc.findIndex((p) => p.postId === action.payload.postId)] = cur;
+                return acc;
+            }
+        }, []); 
     }),
     [ADD_POST]: (state, action) => produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
@@ -152,10 +163,12 @@ export default handleActions ({
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
-        let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
-        draft.list[idx] = draft.list.filter((p) => {
-            return p.postId !== action.payload.postId
-        })
+        draft.list = draft.list.filter((el) => {
+            if (el.postId === action.payload.postId) {
+              return false;
+            }
+            return true;
+        });
     }),
 
 },initialState);
