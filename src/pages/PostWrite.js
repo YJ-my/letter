@@ -15,13 +15,17 @@ const PostWrite = (props) => {
     const post_idx = postList.findIndex(p => p.postId === parseInt(postId));    
     const post = postList[post_idx];
 
+    let post_id = props.match.params.postId;
+    const is_edit = post_id ? true : false;
+    let _post = is_edit ? postList.find((p) => p.postId === post_id) : null;
+
+
     //console.log(post.postId);
-    const [contents, setContents] = React.useState("");
+    const [contents, setContents] = React.useState(_post ? _post.contents : ""); 
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
     const date = moment().format("YYYY-MM-DD");
 
-    let post_id = props.match.params.postId;
-
+    
 
     const changeContents =  (e) => {        
         setContents(e.target.value);
@@ -44,7 +48,6 @@ const PostWrite = (props) => {
     };
 
     // console.log(post_id);
-    const is_edit = post_id ? true : false;
 
 
     return(

@@ -88,7 +88,7 @@ const addPostDB = (content,anonymous) => {
         postApis.addPost(content,anonymous).then((respones)=>{
             const postId = respones.data;
 
-            postApis.getOnePostDB(postId)
+            postApis.getOnePost(postId)
             .then((res) => {
                 console.log("게시글 새로작성",res.data);
                 dispatch(addPost({...res.data,replyCount:0}));
