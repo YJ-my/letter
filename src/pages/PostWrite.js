@@ -40,7 +40,7 @@ const PostWrite = (props) => {
             content:contents,
             anonymous:anonymous
         }
-        dispatch(PostActions.editPostDB(post.postId,postData));
+        dispatch(PostActions.editPostDB(parseInt(post.postId),postData));
     };
 
     // console.log(post_id);
