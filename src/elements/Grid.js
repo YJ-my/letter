@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Grid = (props) => {
-    const {is_flex, is_scroll, relative, width, padding, margin, bg, center, border, radius, min_height, display, children, _onClick} = props;
+    const {is_flex, is_scroll, relative, width, padding, margin, bg, center, border, radius, min_height, display, align, children, _onClick} = props;
     const styles = {
         width: width,
         padding: padding,
@@ -16,7 +16,7 @@ const Grid = (props) => {
         is_scroll:is_scroll,
         display:display,
         relative:relative,
-        
+        align:align,
     }
     if(is_scroll){
         return(
@@ -49,6 +49,7 @@ Grid.defaultProps = {
     is_scroll:false,
     display:"block",
     relative:false,
+    align:false,
 };
 
 const GridBox = styled.div`
@@ -69,6 +70,7 @@ const GridBox = styled.div`
     ${(props)=>props.min_height ? `min-height: ${props.min_height};` : ''};
     ${(props) => (!props.is_flex && props.display ? `display: ${props.display};` : "block")};
     ${(props) => (props.relative ? `position: relative` : "")};
+    ${(props) => (props.align ? `: vertical-align:bottom` : "")};
 `;
 
 

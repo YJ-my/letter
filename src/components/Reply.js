@@ -4,7 +4,7 @@ import {Grid, Text, Fixed, Button} from "../elements/index";
 
 const Reply = () => {
     return(
-        <Grid className="detail_card" min_height="85vh" display="inline-block" bg="#eee" padding="20px" radius="10px" relative="relative">
+        <Grid className="detail_card" min_height="80vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
             <Grid is_flex>
                 <Text>2022.02.11</Text>
                 <Text bold>닉네임</Text>
