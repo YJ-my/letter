@@ -38,16 +38,33 @@ const addReplyDB = (postId, reply) => {
 };
 
 //답장 삭제하기
-const deleteReplyDB = (replyId) => {
+const deleteReplyDB = (postId, replyId) => {
     return function (dispatch, getState, {history}){
-        console.log("답장 삭제",replyId);
+        console.log("답장 삭제",postId,replyId);
 
-        const replyList = getState().post.list.reply; //편지 리스트 안에 답장리스트 불러오기
-        const reply_index = replyList.findIndex((w)=>{ //리스트에서 같은 아이디를 가진 답장 찾기
-            return w.replyId === replyId
+        // const postList = getState().post.list; //편지 리스트 안에 답장리스트 불러오기
+        // const post_idx = postList.findIndex((p) => p.postId === parseInt(postId));
+        // const post = postList[post_idx];
+        // const replys = post.replys;
+        
+        
+        // const reply_index = replys.findIndex((r)=>{ //리스트에서 같은 아이디를 가진 답장 찾기
+        //     return r.replyId === replyId
+        // });
+
+        //console.log(reply_index);
+
+        //dispatch(deleteReply(replyId));
+
+        postApis.replyDelete(replyId)
+        .then((res)=>{
+            console.log(res);
+            window.alert("답장을 삭제했습니다.");
+            history.replace("/");
+        }).catch((err)=>{
+            window.alert("답장 삭제 실패");
+            console.log("답장 삭제 실패", err);
         });
-
-        //dispatch(deleteReply(reply_index));
     }
 };
 
@@ -65,6 +82,7 @@ export default handleActions  ({
 
 const actionCreators = {
     addReplyDB,
+    deleteReplyDB
 
 };
 
