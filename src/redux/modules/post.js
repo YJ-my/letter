@@ -105,14 +105,13 @@ const addPostDB = (content,anonymous) => {
 
 const editPostDB = (postId=null, content, anonymous) => {
     return function (dispatch, getState, {history}) {
-       
         const _user = getState().user.user;
         const user_info = {
             nickname: _user.nickname,  // 유저 닉네임
             username: _user.username, //유저 아이디
         };
 
-        const _post_idx = getState().post.list.findIndex((p) => p.id === postId);
+        const _post_idx = getState().post.list.findIndex((p) => p.postId === postId);
         const _post = getState().post.list[_post_idx];
 
         const post = {
@@ -120,13 +119,16 @@ const editPostDB = (postId=null, content, anonymous) => {
             content:content,
             anonymous:anonymous,
         };
-        postApis.editPost(postId, content, anonymous).then((res)=>{
+
+        console.log(content, anonymous, user_info.nickname);
+
+        postApis.editPost(postId,content, anonymous).then((res)=>{
             console.log(res.data); //result 값
             dispatch(editPost(postId,{...post}));
         }).catch((error)=>{
             console.log("게시글 작성 에러",error);
             window.alert("편지 수정을 실패했습니다 :(");
-        })        
+        })
         
     };
 };

@@ -10,16 +10,14 @@ import moment from "moment";
 const PostWrite = (props) => {
     const dispatch = useDispatch();
     const postId = props.match.params.postId;
-    const postList = useSelector((state) => state.post.list);    
-    const is_edit = postId ? true : false;
+    const postList = useSelector((state) => state.post.list);  
 
     const [contents, setContents] = React.useState("");
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
     const date = moment().format("YYYY-MM-DD");
 
-    let _post = is_edit ? postList.find(p => p.postId === parseInt(postId)) : null;
+    let post_id = props.match.params.postId;
 
-    console.log(_post);
 
     const changeContents =  (e) => {        
         setContents(e.target.value);
@@ -34,17 +32,12 @@ const PostWrite = (props) => {
     };
 
     const editPost = () => {
-        dispatch(PostActions.editPostDB(postId,{content:contents,anonymous:anonymous}));
+
+        dispatch(PostActions.editPostDB(post_id,contents,anonymous));
     };
 
-   
-
-    // React.useEffect(()=>{
-    //     if (is_edit) { //수정 페이지라면
-    //         console.log(_post.content);    
-    //          //프리뷰 가져오기
-    //       }
-    // },[]);
+    // console.log(post_id);
+    const is_edit = post_id ? true : false;
 
 
     return(
@@ -60,8 +53,9 @@ const PostWrite = (props) => {
                         <label htmlFor="scales">익명작성</label>
                         <Grid>                            
                             <Input
-                                value={contents}                               
+                                value={contents}
                                 _onChange={changeContents}
+                                // label="게시글 내용"
                                 placeholder="편지 내용을 입력해주세요 :)"
                                 multiLine
                             />                                                    
