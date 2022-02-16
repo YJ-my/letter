@@ -21,7 +21,7 @@ const PostWrite = (props) => {
 
 
     //console.log(post.postId);
-    const [contents, setContents] = React.useState(_post ? _post.contents : ""); 
+    const [contents, setContents] = React.useState(_post ? _post.content : ""); 
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
     const date = moment().format("YYYY-MM-DD");
 
