@@ -9,6 +9,7 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 const PostDetail = (props) => {
     const dispatch = useDispatch();
 
+    const is_login = useSelector((state) => state.user.is_login);
     const params_id = props.match.params.postId;
     const user_info = useSelector((state) => state.user.user);
     const postList = useSelector((state) => state.post.list);    
@@ -16,14 +17,15 @@ const PostDetail = (props) => {
     const post = postList[post_idx];
     const replyList = post.replys;
 
-    console.log("답장~~~",replyList);
-
     React.useEffect(() => {
         if(!post){
            return; 
         }
+        if(is_login === null || is_login === false){
+            history.push("/");
+        }
         dispatch(postActions.getOnePostDB(parseInt(params_id)));
-    });
+    },[]);
 
     const editOnePost = () => {
         history.push(`/write/${params_id}`)
@@ -31,9 +33,7 @@ const PostDetail = (props) => {
 
     const deletePost =() => {
         dispatch(postActions.deletePostDB(parseInt(params_id)));
-    };
-
-    
+    };    
 
     return(
         <React.Fragment>   
@@ -43,7 +43,7 @@ const PostDetail = (props) => {
                         <Grid  min_height="80vh" display="inline-block" bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative" align>
                             <Grid is_flex>
                                 <Text>{post.localDateTime}</Text>
-                                <Text bold>{post.anonymous===false? (post.nickName):("익명")}</Text>
+                                <Text bold>{post.anonymous===false? (post.nickname):("익명")}</Text>
                             </Grid>
                             <Grid>
                                 <Text>{post.content}</Text>
