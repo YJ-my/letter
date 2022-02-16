@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {actionCreators as postActions} from "../redux/modules/post";
 import Reply from "../components/Reply";
 import { FiSend } from "react-icons/fi";
-
+import { FaAngleDoubleRight } from "react-icons/fa";
 const PostDetail = (props) => {
     const dispatch = useDispatch();
 
@@ -37,9 +37,9 @@ const PostDetail = (props) => {
     return(
         <React.Fragment>   
             {post && (       
-                <Grid >
+                <Grid >                    
                     <Grid is_scroll >               
-                        <Grid  min_height="85vh" display="inline-block" bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
+                        <Grid  min_height="80vh" display="inline-block" bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative" align>
                             <Grid is_flex>
                                 <Text>{post.localDateTime}</Text>
                                 <Text bold>{post.anonymous===false? (post.nickName):("익명")}</Text>
@@ -60,12 +60,11 @@ const PostDetail = (props) => {
                                 ><FiSend/></Button>
                             )}                            
                         </Grid>
-                        {/* 답장 영역 */}
-                            <Grid display="inline-block">
-                                <Reply></Reply>
-                            </Grid>
+                        {/* 답장 영역 */}                            
+                        <Reply></Reply>                            
                         {/* 답장영역 끝 */}
-                    </Grid>                
+                    </Grid>    
+                    <Text color="white">옆으로 스크롤을 넘기면 답장이 나옵니다 <FaAngleDoubleRight style={{fontSize: "15px",verticalAlign: "sub"}}/></Text>            
                 </Grid>           
             )}  
         </React.Fragment>
