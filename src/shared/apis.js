@@ -58,8 +58,8 @@ export const postApis = {
         apis.delete(`/api/posts/${postId}`)
     ,
     //답장작성
-    replyPost: (postId, comment, anonymous) => 
-        apis.post(`/api/reply/${postId}`)
+    replyPost: (postId, reply) => 
+        apis.post(`/api/reply/${postId}`, {...reply})
     ,
     //답장삭제
     replyDelete: (postId) => 

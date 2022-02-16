@@ -7,17 +7,16 @@ import {actionCreators as postActions} from "../redux/modules/post";
 import Reply from "../components/Reply";
 import { FiSend } from "react-icons/fi";
 
-
-
 const PostDetail = (props) => {
     const dispatch = useDispatch();
 
     const params_id = props.match.params.postId;
     const user_info = useSelector((state) => state.user.user);
     const postList = useSelector((state) => state.post.list);
-    const post_idx = postList.findIndex(p => p.postId === parseInt(params_id));    
-    const post = postList[post_idx];
-    
+    const post_idx = postList.findIndex((p) => {
+        return p.postId === parseInt(params_id)
+    });    
+    const post = postList[post_idx];   
 
     React.useEffect(() => {
         if(post){
@@ -30,6 +29,8 @@ const PostDetail = (props) => {
         history.push(`/write/${params_id}`)
     }
 
+    //console.log("포스트 디테일",post);
+
     return(
         <React.Fragment>   
             {post && (       
@@ -37,8 +38,8 @@ const PostDetail = (props) => {
                     <Grid is_scroll >               
                         <Grid  min_height="85vh" display="inline-block" bg="#F0EDCC" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
                             <Grid is_flex>
-                                <Text>{post.modifiedAt}</Text>
-                                <Text bold>{post.nickname}</Text>
+                                <Text>{post.localDateTime}</Text>
+                                <Text bold>{post.anonymous===false? (post.nickName):("익명")}</Text>
                             </Grid>
                             <Grid>
                                 <Text>{post.content}</Text>

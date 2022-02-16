@@ -11,10 +11,13 @@ const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 
 
+
 const getPost = createAction(GET_POST, (post_list)=>({post_list}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
 const editPost = createAction(EDIT_POST, (post) => ({post}));
 const deletePost = createAction(DELETE_POST, (post) => ({post}));
+
+
 
 
 const initialState = {
@@ -27,22 +30,8 @@ const getPostDB = () => {
     return function (dispatch, getState, {history}) {
         postApis.getPost()
             .then((res)=>{            
-            console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
-            let post_list = [];
-            
-            res.data.forEach((_post)=>{
-                const post = {
-                    username:_post.username,
-                    postId : _post.postId,
-                    content: _post.content,
-                    modifiedAt: _post.localDateTime,
-                    nickname: _post.nickName,
-                    replyCount: _post.replyCount,
-                    anonymous:_post.anonymous,
-                };
-
-                post_list.push(post);
-            });            
+            //console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
+            const post_list = res.data;
             dispatch(getPost(post_list));
         });     
     }
@@ -54,23 +43,31 @@ const getOnePostDB = (postId) => {
 
         postApis.getOnePost(postId)
         .then((res) => {
-            console.log(res.data);
 
+            console.log("게시글 1개 콘솔",res.data);
             const _post = res.data;
-            const post = {
-                username:_post.username,
-                postId : _post.postId,
-                content: _post.content,
-                modifiedAt: _post.localDateTime,
-                nickname: _post.nickName,
-                replyCount: _post.replyCount,
-                anonymous:_post.anonymous,
-            };
-            dispatch(getPost(post));
-        })
-        .catch((err) => {
+            // const post = {
+            //     username:_post.username,
+            //     postId : _post.postId,
+            //     content: _post.content,
+            //     localDateTime: _post.localDateTime,
+            //     nickname: _post.nickName,
+            //     replyCount: _post.replyCount,
+            //     anonymous:_post.anonymous,
+            //     // reply: {
+            //     //     username: _post.username,
+            //     //     commentId: _post.commentId,
+            //     //     nickname: _post.nickName,
+            //     //     comment: _post.comment,
+            //     //     anontmous: _post.anontmous,
+            //     //     localDateTime: _post.localDateTime,
+            //     // }
+            // };
+            dispatch(getPost(_post));
+
+        }).catch((err) => {
           console.log("게시물 1개 가져오기 실패 : ", err.response);
-          history.replace("/");
+          //history.replace("/");
         });
     };
   };
@@ -86,7 +83,6 @@ const addPostDB = (content,anonymous) => {
         postApis.addPost(content,anonymous).then((respones)=>{
             const date = moment().format("YYYY-MM-DD");
             const user = getState().user.user;
-            console.log(user.username, user.nickname);
             console.log("포스트 성공 데이터",respones.data);
 
             dispatch(addPost({ 
@@ -95,7 +91,7 @@ const addPostDB = (content,anonymous) => {
                 postId: respones.data,
                 username: user.username, 
                 nickname:user.nickname,
-                modifiedAt:date,
+                localDateTime:date,
                 replyCount:0,
             }))
 
