@@ -42,10 +42,11 @@ const getPostDB = () => {
             //         username:_post.username,
             //         postId : _post.postId,
             //         content: _post.content,
-            //         modifiedAt: _post.localDateTime,
-            //         nickname: _post.nickName,
+            //         localDateTime: _post.localDateTime,
+            //         nickName: _post.nickName,
             //         replyCount: _post.replyCount,
             //         anonymous:_post.anonymous,
+            //         replys:[],
             //     };
 
             //     post_list.push(post);
@@ -94,7 +95,7 @@ const addPostDB = (content,anonymous) => {
                 anonymous:anonymous, 
                 postId: respones.data,
                 username: user.username, 
-                nickname:user.nickname,
+                nickName:user.nickname,
                 localDateTime:date,
                 replyCount:0,
             }));
@@ -140,9 +141,11 @@ const deletePostDB = (postId) => {
         postApis.deletePost(postId)
         .then((res) => {
             console.log(res);
+
             dispatch(deletePost(postId));
             history.push("/");
             window.alert("편지 삭제를 완료했습니다 :)");
+
         }).catch(err => {
             window.alert("편지 삭제를 실패했습니다 :(");
             console.log("편지삭제실패",err);
@@ -150,7 +153,6 @@ const deletePostDB = (postId) => {
         });
     };
 };
-
 
 
 
@@ -179,17 +181,17 @@ export default handleActions ({
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
-        let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
-        draft.list[idx] = draft.list.filter((p) => {
-            console.log(p.postId, action.payload.postId);
-            return p.postId !== action.payload.postId
-        })
-        // draft.list = draft.list.filter((el) => {
-        //     if (el.postId === action.payload.postId) {
-        //       return false;
-        //     }
-        //     return true;
-        // });
+        // let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
+        // draft.list[idx] = draft.list.filter((p) => {
+        //     console.log(p.postId, action.payload.postId);
+        //     return p.postId !== action.payload.postId
+        // })
+        draft.list = draft.list.filter((el) => {
+            if (el.postId === action.payload.postId) {
+              return false;
+            }
+            return true;
+        });
     }),
 
 },initialState);
