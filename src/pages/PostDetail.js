@@ -17,7 +17,9 @@ const PostDetail = (props) => {
     const postList = useSelector((state) => state.post.list);
     const post_idx = postList.findIndex(p => p.postId === parseInt(params_id));    
     const post = postList[post_idx];
+    const [anonymous, setAnonymous] = React.useState(props.anonymous);
     
+    // const is_anonymous = anonymous ? true : false;
 
     React.useEffect(() => {
         if(post){
@@ -28,6 +30,10 @@ const PostDetail = (props) => {
 
     const editOnePost = () => {
         history.push(`/write/${params_id}`)
+    }
+
+    const deletePost =() => {
+        dispatch(postActions.deletePostDB(params_id));
     }
 
     return(
@@ -46,7 +52,7 @@ const PostDetail = (props) => {
                             {post.username === user_info.username ? (
                                 <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
                                     <Button width="calc(50% - 5px)" margin="0 10px 0 0" _onClick={editOnePost}>수정</Button>
-                                    <Button width="calc(50% - 5px)">삭제</Button>
+                                    <Button width="calc(50% - 5px)" _onClick={deletePost}>삭제</Button>
                                 </Fixed>
                             ) : (
                                 <Button reply

@@ -137,6 +137,9 @@ const deletePostDB = (postId) => {
         
         apis.delete(`/api/posts/${postId}`,{postId}).then((res) => {
             console.log(res);
+            dispatch(deletePost(postId));
+            history.push("/");
+            window.alert("편지 삭제를 완료했습니다 :)");
         }).catch(err => {
             window.alert("편지 삭제를 실패했습니다 :(");
         });
@@ -159,7 +162,12 @@ export default handleActions ({
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
-
+        draft.list = draft.list.filter((el) => {
+            if (el.postId === action.payload.postId) {
+              return false;
+            }
+            return true;
+          });
     }),
 
 },initialState);
