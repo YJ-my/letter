@@ -17,7 +17,7 @@ const Card = (props) => {
                         <hr/>
                     </Grid>
                     <Grid>
-                        <Text size="16px"><b>{props.anonymous === false ? (props.nickName) : ("익명")}</b>님으로부터</Text>
+                        <Text size="16px"><b>{props.anonymous === false ? (props.nickname) : ("익명")}</b>님으로부터</Text>
                         <Text margin="5px 0 0 0" ellipsis>{props.content}</Text>
                     </Grid>
                     <Text align="right">더 읽어보기<FaAngleDoubleRight style={{fontSize: "15px",verticalAlign: "sub"}}/></Text>

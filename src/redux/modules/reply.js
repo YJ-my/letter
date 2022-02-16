@@ -52,9 +52,9 @@ const deleteReplyDB = (postId, replyId) => {
         //     return r.replyId === replyId
         // });
 
-        //console.log(reply_index);
+        // console.log(reply_index);
 
-        //dispatch(deleteReply(replyId));
+        // dispatch(deleteReply(replyId));
 
         postApis.replyDelete(replyId)
         .then((res)=>{
