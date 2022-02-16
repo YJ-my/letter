@@ -12,17 +12,17 @@ const PostDetail = (props) => {
     const params_id = props.match.params.postId;
     const user_info = useSelector((state) => state.user.user);
     const postList = useSelector((state) => state.post.list);
-    const post_idx = postList.findIndex((p) => {
-        return p.postId === parseInt(params_id)
-    });    
+    const post_idx = postList.findIndex((p) => p.postId === parseInt(params_id));    
     const post = postList[post_idx];
 
+    
+
     React.useEffect(() => {
-        if(post){
+        if(!post){
            return; 
         }
-        dispatch(postActions.getOnePostDB(params_id));
-    });  
+        dispatch(postActions.getOnePostDB(parseInt(params_id)));
+    });
 
     const editOnePost = () => {
         history.push(`/write/${params_id}`)
@@ -31,6 +31,8 @@ const PostDetail = (props) => {
     const deletePost =() => {
         dispatch(postActions.deletePostDB(parseInt(params_id)));
     };
+
+    console.log("답장확인중",post);
 
     return(
         <React.Fragment>   

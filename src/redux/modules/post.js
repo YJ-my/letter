@@ -6,6 +6,7 @@ import apis from "../../shared/apis";
 import { postApis } from "../../shared/apis";
 
 const GET_POST = "GET_POST";
+const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
@@ -13,6 +14,7 @@ const DELETE_POST = "DELETE_POST";
 
 
 const getPost = createAction(GET_POST, (post_list)=>({post_list}));
+const setPost = createAction(SET_POST, (post)=>({post}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
 const editPost = createAction(EDIT_POST, (post) => ({post}));
 const deletePost = createAction(DELETE_POST, (postId) => ({postId}));
@@ -45,29 +47,14 @@ const getOnePostDB = (postId) => {
         .then((res) => {
 
             console.log("게시글 1개 콘솔",res.data);
+            console.log(postId);
             const _post = res.data;
-            // const post = {
-            //     username:_post.username,
-            //     postId : _post.postId,
-            //     content: _post.content,
-            //     localDateTime: _post.localDateTime,
-            //     nickname: _post.nickName,
-            //     replyCount: _post.replyCount,
-            //     anonymous:_post.anonymous,
-            //     // reply: {
-            //     //     username: _post.username,
-            //     //     commentId: _post.commentId,
-            //     //     nickname: _post.nickName,
-            //     //     comment: _post.comment,
-            //     //     anontmous: _post.anontmous,
-            //     //     localDateTime: _post.localDateTime,
-            //     // }
-            // };
-            dispatch(getPost(_post));
+            //dispatch(setPost(_post));
 
-        }).catch((err) => {
+        })
+        .catch((err) => {
           console.log("게시물 1개 가져오기 실패 : ", err.response);
-          //history.replace("/");
+          history.replace("/");
         });
     };
   };
@@ -154,6 +141,9 @@ export default handleActions ({
     [GET_POST]: (state, action) => produce(state, (draft) => {
         draft.list = action.payload.post_list;
     }),
+    [SET_POST]: (state, action) => produce(state, (draft)=> {
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
+    }),
     [ADD_POST]: (state, action) => produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
     }),
@@ -164,7 +154,6 @@ export default handleActions ({
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
         draft.list[idx] = draft.list.filter((p) => {
-            console.log(p.postId, action.payload.postId);
             return p.postId !== action.payload.postId
         })
     }),

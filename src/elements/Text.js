@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Text = (props) => {
-  const { bold, color, size, children, margin , inline_block, align, overflow, ellipsis} = props;
+  const { bold, color, size, children, margin , inline_block, align, ellipsis} = props;
 
   const styles = {
     bold: bold, 
@@ -11,7 +11,7 @@ const Text = (props) => {
     margin:margin, 
     inline_block:inline_block,
     align:align,
-    overflow:overflow,
+    // overflow:overflow,
     ellipsis:ellipsis,
   };
 
@@ -24,13 +24,13 @@ const Text = (props) => {
 
   }
 
-  if(overflow){
-    return (
-      <ScrollP {...styles}>
-          {children}
-      </ScrollP>
-    )
-  }
+  // if(overflow){
+  //   return (
+  //     <ScrollP {...styles}>
+  //         {children}
+  //     </ScrollP>
+  //   )
+  // }
   
   return (
       <P {...styles}>
@@ -47,7 +47,7 @@ Text.defaultProps = {
   margin: false,
   inline_block:false,
   align:"left",
-  overflow:"auto",
+  // overflow:"auto",
 };
 
 const P = styled.p`
@@ -57,6 +57,7 @@ const P = styled.p`
   font-weight: ${(props) => (props.bold? "600" : "400")};
   ${(props) => (props.margin? `margin: ${props.margin};` : '')};
   ${(props) => (props.align? `text-align: ${props.align};` : 'left')};
+  white-space: normal;
 `;
 
 const ScrollP = styled.p`
@@ -66,7 +67,7 @@ const ScrollP = styled.p`
   font-weight: ${(props) => (props.bold? "600" : "400")};
   ${(props) => (props.margin? `margin: ${props.margin};` : '')};
   ${(props) => (props.align? `text-align: ${props.align};` : 'left')};
-  ${(props) => (props.overflow? `overflow-y: ${props.overflow};` : 'auto')};
+  //${(props) => (props.overflow? `overflow-y: ${props.overflow};` : 'auto')};
   max-height: 300px;
   @media screen and (max-width: 540px) {
     max-height: 150px;
