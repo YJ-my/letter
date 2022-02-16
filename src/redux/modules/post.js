@@ -22,14 +22,14 @@ const initialState = {
 };
 
 
-const initalPost = {
-    username: "jini@naver.com",
-    postId: 1,
-    nickname : "닉네임",
-    content: "내용이에요",
-    anonymous: false,
-    modifiedAt: "2202-02-12",
-};
+// const initalPost = {
+//     username: "jini@naver.com",
+//     postId: 1,
+//     nickname : "닉네임",
+//     content: "내용이에요",
+//     anonymous: false,
+//     modifiedAt: "2202-02-12",
+// };
 
 //게시글 조회
 const getPostDB = () => {
