@@ -23,10 +23,12 @@ const initialState = {
 
 
 const initalPost = {
-    content:"안녕하세요 편지써봅니다.",
-    nickname:"닉네임",
-    anonymous:false, //익명여부
-    modifiedAt:"2202-02-12",
+    username: "jini@naver.com",
+    postId: 1,
+    nickname : "닉네임",
+    content: "내용이에요",
+    anonymous: false,
+    modifiedAt: "2202-02-12",
 };
 
 //게시글 조회
@@ -34,11 +36,12 @@ const getPostDB = () => {
     return function (dispatch, getState, {history}) {
         postApis.getPost()
             .then((res)=>{            
-            //console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
+            console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
             let post_list = [];
             
             res.data.forEach((_post)=>{
                 const post = {
+                    username:_post.username,
                     postId : _post.postId,
                     content: _post.content,
                     modifiedAt: _post.localDateTime,
@@ -64,6 +67,7 @@ const getOnePostDB = (postId) => {
 
             const _post = res.data;
             const post = {
+                username:_post.username,
                 postId : _post.postId,
                 content: _post.content,
                 modifiedAt: _post.localDateTime,
@@ -103,26 +107,12 @@ const addPostDB = (content,anonymous) => {
 
 //게시글 수정
 
-const editPostDB = (postId=null, content, anonymous) => {
+const editPostDB = (postId, post) => {
     return function (dispatch, getState, {history}) {
-        const _user = getState().user.user;
-        const user_info = {
-            nickname: _user.nickname,  // 유저 닉네임
-            username: _user.username, //유저 아이디
-        };
 
-        const _post_idx = getState().post.list.findIndex((p) => p.postId === postId);
-        const _post = getState().post.list[_post_idx];
+        console.log(postId, post);
 
-        const post = {
-            ...initalPost,
-            content:content,
-            anonymous:anonymous,
-        };
-
-        console.log(content, anonymous, user_info.nickname);
-
-        postApis.editPost(postId,content, anonymous).then((res)=>{
+        postApis.editPost(postId,post).then((res)=>{
             console.log(res.data); //result 값
             dispatch(editPost(postId,{...post}));
         }).catch((error)=>{

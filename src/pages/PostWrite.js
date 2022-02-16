@@ -6,12 +6,16 @@ import { actionCreators as PostActions } from "../redux/modules/post";
 import { useSelector, useDispatch } from "react-redux";
 import "moment";
 import moment from "moment";
+import { constant } from "lodash";
 
 const PostWrite = (props) => {
     const dispatch = useDispatch();
     const postId = props.match.params.postId;
     const postList = useSelector((state) => state.post.list);  
+    const post_idx = postList.findIndex(p => p.postId === parseInt(postId));    
+    const post = postList[post_idx];
 
+    //console.log(post.postId);
     const [contents, setContents] = React.useState("");
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
     const date = moment().format("YYYY-MM-DD");
@@ -32,8 +36,11 @@ const PostWrite = (props) => {
     };
 
     const editPost = () => {
-
-        dispatch(PostActions.editPostDB(post_id,contents,anonymous));
+        const postData = {
+            content:contents,
+            anonymous:anonymous
+        }
+        dispatch(PostActions.editPostDB(post.postId,postData));
     };
 
     // console.log(post_id);
