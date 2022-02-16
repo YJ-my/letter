@@ -1,6 +1,6 @@
 import React from "react";
 import { history } from "../redux/configureStore";
-import {Grid, Button, Text, Fixed} from "../elements/index";
+import {Grid, Button, Text, Fixed, Card} from "../elements/index";
 import { useSelector, useDispatch } from "react-redux";
 import {actionCreators as postActions} from "../redux/modules/post";
 import Reply from "../components/Reply";
@@ -11,11 +11,12 @@ const PostDetail = (props) => {
 
     const params_id = props.match.params.postId;
     const user_info = useSelector((state) => state.user.user);
-    const postList = useSelector((state) => state.post.list);
+    const postList = useSelector((state) => state.post.list);    
     const post_idx = postList.findIndex((p) => p.postId === parseInt(params_id));    
     const post = postList[post_idx];
+    const replyList = post.replys;
 
-    
+    console.log("답장~~~",replyList);
 
     React.useEffect(() => {
         if(!post){
@@ -32,7 +33,7 @@ const PostDetail = (props) => {
         dispatch(postActions.deletePostDB(parseInt(params_id)));
     };
 
-    console.log("답장확인중",post);
+    
 
     return(
         <React.Fragment>   
@@ -60,10 +61,15 @@ const PostDetail = (props) => {
                                 ><FiSend/></Button>
                             )}                            
                         </Grid>
-                        {/* 답장 영역 */}                            
-                        <Reply></Reply>                            
+                        {/* 답장 영역 */}  
+                        {replyList.map((p, idx) => {                
+                            return(                                
+                                <Reply {...p} key={idx}></Reply>   
+                            );                
+                        })}
                         {/* 답장영역 끝 */}
-                    </Grid>    
+                    </Grid>  
+                    {/* {replyList.legnth }   */}
                     <Text color="white">옆으로 스크롤을 넘기면 답장이 나옵니다 <FaAngleDoubleRight style={{fontSize: "15px",verticalAlign: "sub"}}/></Text>            
                 </Grid>           
             )}  

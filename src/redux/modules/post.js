@@ -33,8 +33,26 @@ const getPostDB = () => {
     return function (dispatch, getState, {history}) {
         postApis.getPost()
             .then((res)=>{            
-            console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
+            //console.log("getPostDB",res.data); //백엔드에서 넘어온 데이터 확인
             const data = res.data;
+            const replys = res.data.replys;
+
+            
+
+            // let post_list = [];
+            // res.data.forEach((_post)=>{
+            //     const post = {
+            //         username:_post.username,
+            //         postId : _post.postId,
+            //         content: _post.content,
+            //         modifiedAt: _post.localDateTime,
+            //         nickname: _post.nickName,
+            //         replyCount: _post.replyCount,
+            //         anonymous:_post.anonymous,
+            //     };
+
+            //     post_list.push(post);
+            // });                   
             
             dispatch(getPost(data));
         });     
@@ -48,7 +66,7 @@ const getOnePostDB = (postId) => {
         postApis.getOnePost(postId)
         .then((res) => {            
 
-            console.log("게시글 1개 콘솔",res.data.replys);
+            //console.log("게시글 1개 콘솔",res.data.replys);
             const replys = res.data.replys;
 
             //dispatch(setPost(res.data));

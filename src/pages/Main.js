@@ -12,7 +12,7 @@ const Main = (props) => {
     const postList = useSelector((state) => state.post.list);
     const userInfo = useSelector((state) => state.user.user);
 
-    console.log(postList);
+    //console.log(postList);
 
     return(
         <React.Fragment>
