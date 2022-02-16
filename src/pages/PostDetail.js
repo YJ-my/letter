@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { history } from "../redux/configureStore";
 import {Grid, Button, Text, Fixed} from "../elements/index";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,7 +15,7 @@ const PostDetail = (props) => {
     const post_idx = postList.findIndex((p) => {
         return p.postId === parseInt(params_id)
     });    
-    const post = postList[post_idx];   
+    const post = postList[post_idx];
 
     React.useEffect(() => {
         if(post){
@@ -27,9 +26,11 @@ const PostDetail = (props) => {
 
     const editOnePost = () => {
         history.push(`/write/${params_id}`)
-    }
+    };
 
-    //console.log("포스트 디테일",post);
+    const deletePost =() => {
+        dispatch(postActions.deletePostDB(parseInt(params_id)));
+    };
 
     return(
         <React.Fragment>   
@@ -47,7 +48,7 @@ const PostDetail = (props) => {
                             {post.username === user_info.username ? (
                                 <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
                                     <Button width="calc(50% - 5px)" margin="0 10px 0 0" _onClick={editOnePost}>수정</Button>
-                                    <Button width="calc(50% - 5px)">삭제</Button>
+                                    <Button width="calc(50% - 5px)" _onClick={deletePost}>삭제</Button>
                                 </Fixed>
                             ) : (
                                 <Button reply

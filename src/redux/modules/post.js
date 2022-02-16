@@ -15,7 +15,7 @@ const DELETE_POST = "DELETE_POST";
 const getPost = createAction(GET_POST, (post_list)=>({post_list}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
 const editPost = createAction(EDIT_POST, (post) => ({post}));
-const deletePost = createAction(DELETE_POST, (post) => ({post}));
+const deletePost = createAction(DELETE_POST, (postId) => ({postId}));
 
 
 
@@ -117,7 +117,7 @@ const editPostDB = (postId, post) => {
             dispatch(editPost(postId,{...post}));
 
             window.alert("편지 수정 성공 :)");
-            history.push("/");
+            history.replace("/");
         }).catch((error)=>{
             console.log("게시글 작성 에러",error);
             window.alert("편지 수정을 실패했습니다 :(");
@@ -131,10 +131,17 @@ const editPostDB = (postId, post) => {
 const deletePostDB = (postId) => {
     return function (dispatch, getState, {history}){
         
-        apis.delete(`/api/posts/${postId}`,{postId}).then((res) => {
+        console.log("포스트삭제",postId);
+
+        postApis.deletePost(postId)
+        .then((res) => {
             console.log(res);
+            dispatch(deletePost(postId));
+            history.replace("/");
+            window.alert("편지 삭제를 완료했습니다 :)");
         }).catch(err => {
             window.alert("편지 삭제를 실패했습니다 :(");
+            console.log("편지삭제실패",err);
         });
     };
 };
@@ -155,7 +162,11 @@ export default handleActions ({
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
-
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
+        draft.list[idx] = draft.list.filter((p) => {
+            console.log(p.postId, action.payload.postId);
+            return p.postId !== action.payload.postId
+        })
     }),
 
 },initialState);
