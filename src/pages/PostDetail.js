@@ -11,15 +11,12 @@ import { FiSend } from "react-icons/fi";
 
 const PostDetail = (props) => {
     const dispatch = useDispatch();
-    const {userInfo} = props;
 
     const params_id = props.match.params.postId;
     const user_info = useSelector((state) => state.user.user);
     const postList = useSelector((state) => state.post.list);
     const post_idx = postList.findIndex(p => p.postId === parseInt(params_id));    
     const post = postList[post_idx];
-
-    console.log(userInfo);
     
 
     React.useEffect(() => {
@@ -45,12 +42,19 @@ const PostDetail = (props) => {
                             </Grid>
                             <Grid>
                                 <Text>{post.content}</Text>
-                            </Grid>                    
-                            <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
-                                <Button width="calc(50% - 5px)" margin="0 10px 0 0" _onClick={editOnePost}>수정</Button>
-                                <Button width="calc(50% - 5px)">삭제</Button>
-                            </Fixed>
-                            {/* <Button reply><FiSend/></Button> */}
+                            </Grid>    
+                            {post.username === user_info.username ? (
+                                <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
+                                    <Button width="calc(50% - 5px)" margin="0 10px 0 0" _onClick={editOnePost}>수정</Button>
+                                    <Button width="calc(50% - 5px)">삭제</Button>
+                                </Fixed>
+                            ) : (
+                                <Button reply
+                                    _onClick={()=>{
+                                        history.push(`/reply_write/${params_id}`);
+                                    }}
+                                ><FiSend/></Button>
+                            )}                            
                         </Grid>
                         {/* 답장 영역 */}
                             <Grid display="inline-block">

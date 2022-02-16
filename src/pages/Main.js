@@ -17,10 +17,10 @@ const Main = (props) => {
             {postList.map((p, idx) => {                
                 return(
                     <Grid  
-                    key={idx}
-                    _onClick={()=>{
-                        history.push(`/post/${p.postId}`)
-                    }}
+                        key={idx}
+                        _onClick={()=>{
+                            history.push(`/post/${p.postId}`)
+                        }}
                     >
                         <Card 
                             {...p}

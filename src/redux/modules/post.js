@@ -22,15 +22,6 @@ const initialState = {
 };
 
 
-// const initalPost = {
-//     username: "jini@naver.com",
-//     postId: 1,
-//     nickname : "닉네임",
-//     content: "내용이에요",
-//     anonymous: false,
-//     modifiedAt: "2202-02-12",
-// };
-
 //게시글 조회
 const getPostDB = () => {
     return function (dispatch, getState, {history}) {
@@ -93,8 +84,21 @@ const addPostDB = (content,anonymous) => {
         console.log("편지 작성중",content, anonymous, _user.nickname);
 
         postApis.addPost(content,anonymous).then((respones)=>{
-            //const user = getState().user.user;
+            const date = moment().format("YYYY-MM-DD");
+            const user = getState().user.user;
+            console.log(user.username, user.nickname);
             console.log("포스트 성공 데이터",respones.data);
+
+            dispatch(addPost({ 
+                content:content, 
+                anonymous:anonymous, 
+                postId: respones.data,
+                username: user.username, 
+                nickname:user.nickname,
+                modifiedAt:date,
+                replyCount:0,
+            }))
+
             window.alert("편지 전달 성공 :)");
             history.push("/");
         }).catch((error)=>{
@@ -115,6 +119,9 @@ const editPostDB = (postId, post) => {
         postApis.editPost(postId,post).then((res)=>{
             console.log(res.data); //result 값
             dispatch(editPost(postId,{...post}));
+
+            window.alert("편지 수정 성공 :)");
+            history.push("/");
         }).catch((error)=>{
             console.log("게시글 작성 에러",error);
             window.alert("편지 수정을 실패했습니다 :(");
@@ -146,7 +153,6 @@ export default handleActions ({
     }),
     [ADD_POST]: (state, action) => produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
-        console.log(draft.list);
     }),
     [EDIT_POST]: (state, action) => produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);

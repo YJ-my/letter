@@ -23,13 +23,13 @@ function App() {
   const user = useSelector((state) => state.user.user);
   const token = getCookie("authorization");
 
-  React.useEffect(() => { //쿠키 있는 지 확인하기
+  React.useEffect(() => { 
     dispatch(postActions.getPostDB());
     
-    if (token && !user) {
+    if (token && !user) {//쿠키는 있는데 유저 정보가 없으면 바로 불러오기
       dispatch(userActions.loginCheckDB());
     }
-  }, []);
+  });
 
   return (
     <React.Fragment>      
@@ -41,7 +41,7 @@ function App() {
           <Route path="/signup" exact component={Signup}/>
           <Route path="/write" exact component={PostWrite}/>
           <Route path="/write/:postId" exact component={PostWrite}/>
-          <Route path="/reply_write" exact component={ReplyWrite}/>
+          <Route path="/reply_write/:postId" exact component={ReplyWrite}/>
           <Route path="/post/:postId" exact component={PostDetail}/>      
         </ConnectedRouter>
       </Grid>      
