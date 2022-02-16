@@ -20,8 +20,6 @@ const editPost = createAction(EDIT_POST, (post) => ({post}));
 const deletePost = createAction(DELETE_POST, (post_list) => ({post_list}));
 
 
-
-
 const initialState = {
     list: [],
 };
@@ -88,7 +86,7 @@ const addPostDB = (content,anonymous) => {
         postApis.addPost(content,anonymous).then((respones)=>{
             const postId = respones.data;
 
-            postApis.getOnePostDB(postId)
+            postApis.getOnePost(postId)
             .then((res) => {
                 console.log("게시글 새로작성",res.data);
                 dispatch(addPost({...res.data,replyCount:0}));
@@ -115,25 +113,19 @@ const editPostDB = (postId, post) => {
     return function (dispatch, getState, {history}) {
         postApis.editPost(postId,post).then((res)=>{
             const post_index = getState().post.list.find((item) => item.postId === postId);
-
             console.log(post_index);
 
-            console.log("편지수정중",res);
-
-            postApis.getOnePostDB(postId)
+            postApis.getOnePost(postId)
             .then((res) => {
                 console.log("게시글 수정하기",res.data);
-
-                dispatch(addPost({...res.data,replyCount:0}));
+                dispatch(editPost({post_index,...res.data,replyCount:post_index.replyCount}));
             })
             .catch((err) => {
-                console.log("게시물 작성 1개 가져오기 실패 : ", err.response);
+                console.log("편지 수정 게시글 가져오기 실패 : ", err.response);
                 history.replace("/");
             });
-
-            //dispatch(editPost(postId,{...post}));
             window.alert("편지 수정 성공 :)");
-            //history.replace("/");
+            history.replace("/");
         }).catch((error)=>{
             console.log("게시글 작성 에러",error);
             window.alert("편지 수정을 실패했습니다 :(");
@@ -195,17 +187,10 @@ export default handleActions ({
     }),
     [EDIT_POST]: (state, action) => produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
-        draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+        draft.list[idx] = { ...draft.list[idx], ...action.payload.post };        
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
-        // let idx = draft.list.findIndex((p) => p.postId === action.payload.postId);
-        // draft.list[idx] = draft.list.filter((p) => {
-        //     console.log(p.postId, action.payload.postId);
-        //     return p.postId !== action.payload.postId
-        // })
-
         draft.list = action.payload.post_list;
-        
     }),
 
 },initialState);
