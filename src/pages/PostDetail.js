@@ -64,7 +64,7 @@ const PostDetail = (props) => {
                         {/* 답장 영역 */}  
                         {replyList.map((p, idx) => {                
                             return(                                
-                                <Reply {...p} key={idx}></Reply>   
+                                <Reply {...p} key={idx} postId={params_id}></Reply>   
                             );                
                         })}
                         {/* 답장영역 끝 */}

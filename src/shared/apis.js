@@ -62,8 +62,8 @@ export const postApis = {
         apis.post(`/api/reply/${postId}`, {...reply})
     ,
     //답장삭제
-    replyDelete: (postId) => 
-        apis.delete(`/api/reply/${postId}`)
+    replyDelete: (replyId) => 
+        apis.delete(`/api/reply/${replyId}`)
     ,
 }
 
