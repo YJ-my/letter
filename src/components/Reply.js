@@ -15,7 +15,7 @@ const Reply = (props) => {
         <Grid className="detail_card" min_height="80vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
             <Grid is_flex>
                 <Text>{props.localDateTime}</Text>
-                <Text bold>{props.nickname}</Text>
+                <Text bold>{props.anonymous===false? (props.nickname):"익명"}</Text>
             </Grid>
             <Grid>
                 <Text>{props.content}</Text>
