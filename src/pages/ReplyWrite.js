@@ -34,9 +34,7 @@ const ReplyWrite = (props) => {
 
         dispatch(replyActions.addReplyDB(params_id,reply));
 
-    }
-
-    
+    }   
 
     return(
         <React.Fragment>
