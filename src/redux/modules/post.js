@@ -62,10 +62,10 @@ const getOnePostDB = (postId) => {
         postApis.getOnePost(postId)
         .then((res) => {            
 
-            //console.log("게시글 1개 콘솔",res.data.replys);
+            console.log("게시글 1개 콘솔",res.data);
             const replys = res.data.replys;
 
-            dispatch(setPost(res.data));
+            //dispatch(getPost(res.data));
 
         })
         .catch((err) => {

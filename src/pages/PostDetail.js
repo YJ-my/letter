@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { history } from "../redux/configureStore";
 import {Grid, Button, Text, Fixed, Card} from "../elements/index";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,32 +6,29 @@ import {actionCreators as postActions} from "../redux/modules/post";
 import Reply from "../components/Reply";
 import { FiSend } from "react-icons/fi";
 import { FaAngleDoubleRight } from "react-icons/fa";
-
+import Permit from "../shared/Permit";
 const PostDetail = (props) => {
-    const dispatch = useDispatch();
-
+    const dispatch = useDispatch();   
     const is_login = useSelector((state) => state.user.is_login);
-    const params_id = props.match.params.postId;
     const user_info = useSelector((state) => state.user.user);
-    const postList = useSelector((state) => state.post.list);    
+    const postList = useSelector((state) => state.post.list);
+    const params_id = props.match.params.postId;    
     const post_idx = postList.findIndex((p) => p.postId === parseInt(params_id));    
-    const post = postList[post_idx];
-    
-    
+    const post = postList[post_idx];  
+
     React.useEffect(() => {
         if(!post){    
            return; 
-        }        
-
+        }
         dispatch(postActions.getOnePostDB(parseInt(params_id)));
-    },[]);
+    });    
 
     if(post === undefined){
         return (
             <React.Fragment></React.Fragment>
         );
     };
-    const replyList = post.replys;    
+    const replyList = post.replys; 
 
     const editOnePost = () => {
         history.push(`/write/${params_id}`)
@@ -39,7 +36,7 @@ const PostDetail = (props) => {
 
     const deletePost =() => {
         dispatch(postActions.deletePostDB(parseInt(params_id)));
-    };    
+    };   
 
     return(
         <React.Fragment>
@@ -67,16 +64,21 @@ const PostDetail = (props) => {
                                 ><FiSend/></Button>
                             ) : ''}
                         </Grid>
-                        {/* 답장 영역 */}  
-                        {replyList.map((p, idx) => {                
-                            return(                                
-                                <Reply {...p} key={idx} postId={params_id}></Reply>   
-                            );                
-                        })}
+                        {/* 답장 영역 */}
+                        <Permit>
+                            {replyList.map((p, idx) => {                
+                                return(                                
+                                    <Reply {...p} key={idx} postId={params_id}></Reply>   
+                                );                
+                            })}💛
+                        </Permit>                        
                         {/* 답장영역 끝 */}
-                    </Grid>  
-                    {/* {replyList.legnth }   */}
-                    <Text color="white">옆으로 스크롤을 넘기면 답장이 나옵니다 <FaAngleDoubleRight style={{fontSize: "15px",verticalAlign: "sub"}}/></Text>            
+                    </Grid>
+                    {is_login ?(
+                        <Text color="white">옆으로 스크롤을 넘기면 답장이 나옵니다 <FaAngleDoubleRight style={{fontSize: "15px",verticalAlign: "sub"}}/></Text>        
+                    ):(
+                        <Text color="white">로그인을 하시면 답장을 볼 수 있어요!</Text>
+                    )}                        
                 </Grid>           
             )}  
         </React.Fragment>

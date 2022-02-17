@@ -41,7 +41,6 @@ const PostWrite = (props) => {
         dispatch(PostActions.editPostDB(parseInt(post.postId),postData));
     };
 
-    // console.log(post_id);
 
 
     return(
