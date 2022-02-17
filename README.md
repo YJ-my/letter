@@ -7,6 +7,7 @@
 #### 프론트 - 안진희,최예진 [깃허브](https://github.com/YJ-my/sparta-w6-letter) 
 #### 백 - 이승민,김종훈,신동석 [깃허브](https://github.com/dss1222/nightletter_login/tree/master)
 
+
 <hr/>
 
 ### API 설계서
