@@ -12,11 +12,11 @@ const Reply = (props) => {
 
 
     console.log(props.commentId, props.postId);
-
     
     
     return(
-        <Grid className="detail_card" min_height="80vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
+        <Grid className="detail_card" min_height="80vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative" 
+        align>
             <Grid is_flex>
                 <Text>{props.localDateTime}</Text>
                 <Text bold>{props.anonymous===false? (props.nickname):"익명"}</Text>

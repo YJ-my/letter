@@ -70,7 +70,7 @@ const GridBox = styled.div`
     ${(props)=>props.min_height ? `min-height: ${props.min_height};` : ''};
     ${(props) => (!props.is_flex && props.display ? `display: ${props.display};` : "block")};
     ${(props) => (props.relative ? `position: relative` : "")};
-    ${(props) => (props.align ? `vertical-align:bottom` : "")};
+    ${(props) => (props.align ? `vertical-align: bottom` : "")};
 `;
 
 
