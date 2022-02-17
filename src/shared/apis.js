@@ -65,6 +65,10 @@ export const postApis = {
     replyDelete: (replyId) => 
         apis.delete(`/api/reply/${replyId}`)
     ,
+    //답장요청
+    getReply: (postId) => 
+        apis.get(`/api/reply/${postId}`)
+    ,
 }
 
 

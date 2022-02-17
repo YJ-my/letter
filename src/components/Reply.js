@@ -6,31 +6,31 @@ import {actionCreators as replyAction} from "../redux/modules/reply";
 
 const Reply = (props) => {
     const dispatch = useDispatch();
-    //const params_id = props.match.params.postId;
-    const postList = useSelector((state) => state.post.list);
-    const user_info = useSelector((state) => state.user.user);
+    const {user_info, localDateTime, anonymous, content, postId, commentId} = props;
+    //const user_info = useSelector((state) => state.user.user);
+    const loginUser = useSelector((state) => state.user.user?.username);
 
-
-    console.log(props.commentId, props.postId);
-
-    
+    //답장 삭제하기
+    const deleteReply = () => {
+        dispatch(replyAction.deleteReplyDB(postId,commentId));
+    };
     
     return(
         <Grid className="detail_card" min_height="80vh" display="inline-block" bg="#eee" padding="20px"  margin="0 20px 0 0" radius="10px" relative="relative">
             <Grid is_flex>
-                <Text>{props.localDateTime}</Text>
-                <Text bold>{props.anonymous===false? (props.nickname):"익명"}</Text>
+                <Text>{localDateTime}</Text>
+                <Text bold>{anonymous===false? (user_info.nickname):"익명"}</Text>
             </Grid>
             <Grid>
-                <Text>{props.content}</Text>
+                <Text>{content}</Text>
             </Grid>
-            {props.username === user_info.username? (
+            {loginUser === user_info.username && (
                 <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
                     <Button _onClick={()=>{
-                        dispatch(replyAction.deleteReplyDB(parseInt(props.postId),props.commentId));
+                        deleteReply();
                     }}>답장 지우기</Button>
                 </Fixed>
-            ) : ""}            
+            )}
         </Grid>  
     );
 

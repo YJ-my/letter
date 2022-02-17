@@ -3,7 +3,9 @@ import { history } from "../redux/configureStore";
 import {Grid, Button, Text, Fixed, Card} from "../elements/index";
 import { useSelector, useDispatch } from "react-redux";
 import {actionCreators as postActions} from "../redux/modules/post";
+import {actionCreators as replyActions} from "../redux/modules/reply";
 import Reply from "../components/Reply";
+import ReplyList from "../components/ReplyList"; //replylist 따로 분리하기
 import { FiSend } from "react-icons/fi";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import Permit from "../shared/Permit";
@@ -12,6 +14,7 @@ const PostDetail = (props) => {
     const is_login = useSelector((state) => state.user.is_login);
     const user_info = useSelector((state) => state.user.user);
     const postList = useSelector((state) => state.post.list);
+    
     const params_id = props.match.params.postId;    
     const post_idx = postList.findIndex((p) => p.postId === parseInt(params_id));    
     const post = postList[post_idx];  
@@ -28,8 +31,6 @@ const PostDetail = (props) => {
             <React.Fragment></React.Fragment>
         );
     };
-    const replyList = post.replys; 
-
     const editOnePost = () => {
         history.push(`/write/${params_id}`)
     };
@@ -65,13 +66,7 @@ const PostDetail = (props) => {
                             ) : ''}
                         </Grid>
                         {/* 답장 영역 */}
-                        <Permit>
-                            {replyList.map((p, idx) => {                
-                                return(                                
-                                    <Reply {...p} key={idx} postId={params_id}></Reply>   
-                                );                
-                            })}
-                        </Permit>                        
+                        <ReplyList postId={params_id}></ReplyList>
                         {/* 답장영역 끝 */}
                     </Grid>
                     {is_login ?(
