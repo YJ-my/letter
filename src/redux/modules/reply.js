@@ -49,7 +49,7 @@ const deleteReplyDB = (postId, replyId) => {
         
         
         // const reply_index = replys.findIndex((r)=>{ //리스트에서 같은 아이디를 가진 답장 찾기
-        //     return r.replyId === replyId
+        //     return r.commentId === replyId
         // });
 
         // console.log(reply_index);        
