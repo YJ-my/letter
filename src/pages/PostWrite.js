@@ -15,7 +15,6 @@ const PostWrite = (props) => {
     const post_idx = postList.findIndex(p => p.postId === parseInt(postId));    
     const post = postList[post_idx];
 
-    //console.log(post.postId);
     const [contents, setContents] = React.useState("");
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
     const date = moment().format("YYYY-MM-DD");
