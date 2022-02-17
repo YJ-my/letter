@@ -27,3 +27,33 @@ https://www.notion.so/anggom/8-585643bae5aa47bc813e57ff8e5a9fcd
 <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/de734aba-742f-4279-a3b7-7390065063db/%E1%84%86%E1%85%B5%E1%84%82%E1%85%B5%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3_%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A5%E1%84%91%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%B7_6.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220217%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220217T014239Z&X-Amz-Expires=86400&X-Amz-Signature=3acb21ac9b44c3541678c9019d6f924d4399d1faf3229806957867a0ea053bf4&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25E1%2584%2586%25E1%2585%25B5%25E1%2584%2582%25E1%2585%25B5%25E1%2584%2591%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25A9%25E1%2584%258C%25E1%2585%25A6%25E1%2586%25A8%25E1%2584%2590%25E1%2585%25B3%2520%25E1%2584%258B%25E1%2585%25AA%25E1%2584%258B%25E1%2585%25B5%25E1%2584%258B%25E1%2585%25A5%25E1%2584%2591%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25A6%25E1%2584%258B%25E1%2585%25B5%25E1%2586%25B7%25206.png%22&x-id=GetObject" width="500px">
 
 
+#### 프론트엔드 트러블슈팅
+- 로그인 전 메인화면 노출이 안되는 문제
+    
+    백엔드에서 로그인을 안해도 메인화면에 접근 가능하게끔 변경해줘서 해결
+    
+- 로그인 전 상세페이지에서 오류가 뜨는 문제
+    
+    비동기적 통신을 하면서 모든 정보가 로드 되지 않았을 때 없는 요소들을 불러오게 되어있어서 발생한 문제
+    
+    → 로그인 했을 시에만 삭제/수정 버튼을 노출하게끔 로직 변경
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9a890b93-33c9-4344-984a-64c858eada87/Untitled.png)
+    
+- 답장 삭제하기 눌렀을 때 ‘삭제하기가 실패했습니다’라고 뜨고 DB에서는 삭제가 됐었던 문제
+    
+    백엔드와 api 통신은 제대로 이뤄지고 있지만, 프론트엔드에서 설정한 reducer dispatch에서 오류가 발생해서 생긴 문제 
+    
+    → 디스패치를 수정해서 해결
+    
+- JSESSONID을 사용해서 로그인을 구현하려고 했었으나 많은 오류 생김
+    
+    구글의 정책으로 jsessonid로는 로그인 구현이 어렵다는 결론을 발견
+    
+    → jwt토큰 형식으로 로그인 구현
+    
+- http-proxy-middleware 사용 시 서버와 통신이 안됐었던 문제
+    
+    proxy-middleware삭제 (jsessionid에서 JWTtoken으로 변환해줬기 때문에 필요 없어짐)
+    
+- body에 토큰을 실어서 보냈을 때 400대 에러 발생
