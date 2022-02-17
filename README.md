@@ -4,8 +4,8 @@
 
 [나의 우체국을 구경해보세요!](http://letter99.s3-website.ap-northeast-2.amazonaws.com/)
 
-#### 프론트 - 안진희,최예진 
-#### 백 - 이승민,김종훈,신동석
+#### 프론트 - 안진희,최예진 [깃허브](https://github.com/YJ-my/sparta-w6-letter) 
+#### 백 - 이승민,김종훈,신동석 [깃허브](https://github.com/dss1222/nightletter_login/tree/master)
 
 <hr/>
 
