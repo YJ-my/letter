@@ -38,7 +38,8 @@ https://www.notion.so/anggom/8-585643bae5aa47bc813e57ff8e5a9fcd
     
     → 로그인 했을 시에만 삭제/수정 버튼을 노출하게끔 로직 변경
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9a890b93-33c9-4344-984a-64c858eada87/Untitled.png)
+    <img width="612" alt="KakaoTalk_Photo_2022-02-17-19-44-18" src="https://user-images.githubusercontent.com/89513776/154459828-8d277a28-3f58-46d6-a68a-4835153a8284.png">
+
     
 - 답장 삭제하기 눌렀을 때 ‘삭제하기가 실패했습니다’라고 뜨고 DB에서는 삭제가 됐었던 문제
     
