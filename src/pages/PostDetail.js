@@ -70,7 +70,7 @@ const PostDetail = (props) => {
                                 return(                                
                                     <Reply {...p} key={idx} postId={params_id}></Reply>   
                                 );                
-                            })}💛
+                            })}
                         </Permit>                        
                         {/* 답장영역 끝 */}
                     </Grid>
