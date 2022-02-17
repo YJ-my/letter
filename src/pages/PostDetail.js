@@ -6,7 +6,7 @@ import {actionCreators as postActions} from "../redux/modules/post";
 import Reply from "../components/Reply";
 import { FiSend } from "react-icons/fi";
 import { FaAngleDoubleRight } from "react-icons/fa";
-import { getCookie } from "../shared/cookie";
+
 const PostDetail = (props) => {
     const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const PostDetail = (props) => {
     };    
 
     return(
-        <React.Fragment>   
+        <React.Fragment>
             {post && (
                 <Grid >                    
                     <Grid is_scroll >               
@@ -53,8 +53,8 @@ const PostDetail = (props) => {
                             </Grid>
                             <Grid>
                                 <Text>{post.content}</Text>
-                            </Grid>    
-                            {post.username?post.username === user_info.username ? (
+                            </Grid>
+                            {is_login?post.username === user_info.username ? (
                                 <Fixed width="calc(100% - 20px)" left="10px" bottom="10px">
                                     <Button width="calc(50% - 5px)" margin="0 10px 0 0" _onClick={editOnePost}>수정</Button>
                                     <Button width="calc(50% - 5px)" _onClick={deletePost}>삭제</Button>
@@ -86,6 +86,7 @@ const PostDetail = (props) => {
 
 PostDetail.defaultProps = {
     postId: 2,
+    username:"가짜@가짜.com",
     nickname : "편지왕",
     content: "편지왕은 나야나",
     anonymous: false,
