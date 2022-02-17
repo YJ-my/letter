@@ -14,21 +14,12 @@ const PostWrite = (props) => {
     const postList = useSelector((state) => state.post.list);  
     const post_idx = postList.findIndex(p => p.postId === parseInt(postId));    
     const post = postList[post_idx];
-    // let post_id = props.match.params.postId;
     const is_edit = postId ? true : false;
-    //p.postId, postId는 둘중에 하나는 문자열이고 하나는 숫자다 그래서 숫자로 다 맞춰줘야함
     let _post = is_edit ? postList.find((p) => p.postId === parseInt(postId)) : null;
 
-
-    //console.log(post.postId);
     const [contents, setContents] = React.useState(_post ? _post.content : ""); 
-    // console.log(contents);
-    console.log(_post);
-
     const [anonymous, setAnonymous] = React.useState(false); //익명체크
-    const date = moment().format("YYYY-MM-DD");
-
-    
+    const date = moment().format("YYYY-MM-DD");    
 
     const changeContents =  (e) => {        
         setContents(e.target.value);
